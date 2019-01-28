@@ -15,7 +15,7 @@ Currently the lines are now showing the appropiate output as before, which is du
 * [Controlp5 2.2.6](https://github.com/sojamo/controlp5/releases)
 * [PeasyCam 3.0.2](http://mrfeinberg.com/peasycam/)
 
-An input movie is mapped to a rotatable 3D digital representation of the installation while over artnet 540 stripes (each equipped with 40 LEDs) from SchnickSchnackSystems receive the same signals and display it on the *real* thing.
+An input movie is mapped to a rotatable 3D digital representation of the installation while over artnet 540 stripes (each equipped with 40 LEDs) from [SchnickSchnackSystems](https://schnick.schnack.systems/produkte/led-komponenten/led-streifen-m/) receive the same signals and display it on the *real* thing.
 
 
 
