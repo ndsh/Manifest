@@ -1,0 +1,9 @@
+{
+ "play": true,
+ "flip": true,
+ "offline": true,
+ "debug": false,
+ "sliderBrightness": 120,
+ "MANIFEST_WIDTH": 720,
+ "MANIFEST_HEIGHT": 300
+}
