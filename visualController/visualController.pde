@@ -2,28 +2,17 @@
 import peasy.*;
 import ch.bildspur.artnet.*;
 import controlP5.*;
+import processing.video.*;
 
 PeasyCam camera;
 ArtNetClient artnet;
 ControlP5 cp5; 
+Movie movie;
 
 Manifest manifest;
 
 color bg = color(50);
 color object = color(40);
-
-float rotator = 0.001;
-boolean rotate = false;
-
-float distance = 23.3;
-
-
-
-
-
-// video import
-import processing.video.*;
-Movie movie;
 
 // runtime / volatile variables
 PImage currentFrame;
@@ -33,6 +22,9 @@ boolean offline = true;
 boolean debug = false;
 float sliderBrightness = 255;
 int sliderOptions = 0;
+boolean rotate = false;
+float rotator = 0.001;
+
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;

@@ -7,6 +7,8 @@ class Manifest {
   
   boolean isUpdatable = false;
   int frameType = 0;
+  
+  float distance = 23.3;
    
   public Manifest(color o) {
     object = o;

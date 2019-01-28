@@ -6,6 +6,9 @@
 
 Proprietary software written in Processing.
 
+## Status
+Currently the lines are now showing the appropiate output as before, which is due to a mishap somewhere in the transformFrame() method.
+
 ## Dependencies
 * [Artnet4j 0.4.0](https://github.com/cansik/artnet4j)
 * [Processing Video 1.0.1+](https://github.com/processing/processing-video)
