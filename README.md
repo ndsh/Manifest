@@ -7,7 +7,7 @@
 Proprietary software written in Processing.
 
 ## Status
-Currently the lines are now showing the appropiate output as before, which is due to a mishap somewhere in the transformFrame() method.
+Current version runs fine in Processing. The real-life application test is missing and can only be conducted in mid/end February 2019.
 
 ## Dependencies
 * [Artnet4j 0.4.0](https://github.com/cansik/artnet4j)
