@@ -16,6 +16,7 @@ static final String router1 = "2.12.4.83";
 static final String router2 = "2.161.30.223";
 
 void feedFrame(PImage p) {
+  //image(p, 0, 0);
   p.loadPixels();
   for (int y = 0; y<4; y++) {
     for(int x = 0; x<720; x++) {

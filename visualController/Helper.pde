@@ -25,11 +25,14 @@ PImage transformFrame(PImage s) {
   destination.beginDraw();
   for(int y = 0; y<s.height; y+=factor) {
       PImage p = s.get(0,y, 720, 1);
-      //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
+      destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
+      //image(s, 0, c, 720, 1, 0, y, 720, 1);
       destination.image(p, 0, c, 720, 1);
+      
       c++;
   }
   destination.endDraw();
+  
   return destination;
 }
 

@@ -51,7 +51,7 @@ void setup() {
   cp5 = new ControlP5(this);
   constructGUI();
     
-  movie = new Movie(this, "demos/test.mp4");
+  movie = new Movie(this, "demos/test17.mp4");
   movie.loop();
   
   createDemos();

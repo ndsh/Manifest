@@ -64,7 +64,7 @@ class Manifest {
          p.loadPixels();
          for(int x = 0; x<720; x++) {
            for(int y = 0; y<30; y++) {
-             color c = p.pixels[x+y*p.height];//color c = p.get(x,y);
+             color c = p.pixels[y*p.width+x];//color c = p.get(x,y);
              setPixel(x,y, lightGain((int)brightness(c)));
            }
          }
