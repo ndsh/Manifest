@@ -9,6 +9,10 @@ Proprietary software written in Processing.
 ## Status
 Current version runs fine in Processing. The real-life application test is missing and can only be conducted in mid/end February 2019.
 
+## Demos
+– Demo 1: Breathing ("Atmen") An implementation of the "Apple Breathing LED"
+**Rest of the Demos are not available yet**
+
 ## Dependencies
 * [Artnet4j 0.4.0](https://github.com/cansik/artnet4j)
 * [Processing Video 1.0.1+](https://github.com/processing/processing-video)

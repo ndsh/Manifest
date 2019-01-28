@@ -120,6 +120,9 @@ class Demo3 {
   
   public Demo3() {
     pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
+    pg.beginDraw();
+    pg.colorMode(HSB, 360, 100, 255);
+    pg.endDraw();
   }
   
   void update() {
@@ -142,9 +145,8 @@ class Demo3 {
         } else if(val < 0) {
           direction = true;
           val = 0;
-          row--;
-          if(row < 0) row = 29;
-          println("row switch:" + row);
+          row --;
+          if(row < 0) row = MANIFEST_HEIGHT;
         }
         pg.endDraw();
       }
