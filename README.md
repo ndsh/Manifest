@@ -19,17 +19,21 @@ Current version runs fine in Processing. The real-life application test is missi
 - 'Slideroptions' + 'Slideroptions2' are used in various demos to control different parameters such as speed, thickness etc.
 
 ## Demos
-– Demo 0: ("Video loop") Loads a video of the size 720x300 pixels
-– Demo 1: ("Atmen") An implementation of the "Apple Breathing LED"
-– Demo 2: ("Lichtstreifen") An adjustable light stripe wanders horizontally over the screen
-– Demo 3: ("Hochwandern") An adjustable light stripe wanders vertically over the screen
-– Demo 4: ("Soundreaktiv") Maps microphone input to brightness levels
-– Demo 5: ("Perlin") Perlin Noise 3D. Slideroptions: Octave control from 0 – 8 / Slideroptions2: Falloff 0f – 1f
-– Demo 6: ("Flocking") Flocking demo by D. Shiffman
-– Demo 7: ("Ping pong") It's a ping pong demo?
-– Demo 11: ("Perlin2") Something like stars. Pretty underperforming.
+- Demo 0: ("Video loop") Loads a video of the size 720x300 pixels
+- Demo 1: ("Atmen") An implementation of the "Apple Breathing LED"
+- Demo 2: ("Lichtstreifen") An adjustable light stripe wanders horizontally over the screen
+- Demo 3: ("Hochwandern") An adjustable light stripe wanders vertically over the screen
+- Demo 4: ("Soundreaktiv") Maps microphone input to brightness levels
+- Demo 5: ("Perlin") Perlin Noise 3D. Slideroptions: Octave control from 0 – 8 / Slideroptions2: Falloff 0f – 1f
+- Demo 6: ("Flocking") Flocking demo by D. Shiffman
+- Demo 7: ("Ping pong") It's a ping pong demo?
+- Demo 11: ("Perlin2") Something like stars. Pretty underperforming.
 
 - **Rest of the Demos are not available yet**
+
+<p align="center">
+  <img src="example.png">
+</p>
 
 ## Dependencies
 * [Artnet4j 0.4.0](https://github.com/cansik/artnet4j)
