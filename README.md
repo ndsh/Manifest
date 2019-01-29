@@ -27,7 +27,7 @@ Current version runs fine in Processing. The real-life application test is missi
 – Demo 5: ("Perlin") Perlin Noise 3D. Slideroptions: Octave control from 0 – 8 / Slideroptions2: Falloff 0f – 1f
 – Demo 6: ("Flocking") Flocking demo by D. Shiffman
 – Demo 7: ("Ping pong") It's a ping pong demo?
-– Demo 11: ("Blob") Should be a blob. Looks like stars. Don't ask me.
+– Demo 11: ("Perlin2") Something like stars. Pretty underperforming.
 
 - **Rest of the Demos are not available yet**
 

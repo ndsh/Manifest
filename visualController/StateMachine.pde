@@ -50,7 +50,7 @@ static final String[] stateNames = {
   "Atmen", "Lichtstreifen", "Hochwandern",
   "Soundreaktiv", "Perlin", "Flocking",
   "PingPong", "Wellen", "Invertierte Wellen",
-  "Zeilen", "Blob"
+  "Zeilen", "Perlin2"
 };
 
 String getStateName(int state) {
