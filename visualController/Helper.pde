@@ -7,6 +7,8 @@ void keyPressed() {
   } else {
     if (key == 'r' || key == 'R' ) {
       rotate = !rotate;
+      float r[] = {rotate?1f:0f};
+      rotateCheckbox.setArrayValue(r);
     }
   }
 }
@@ -55,6 +57,10 @@ int lightGain(int val) {
 
 int lightGain(float val) {
   return (int)map(val, 0, 255, 0, (int)sliderBrightness );
+}
+
+int lightGain(int h, int s, int b) {
+  return (int)map(color(h,s,b), 0, 255, 0, (int)sliderBrightness );
 }
 
 void setupCamera() {

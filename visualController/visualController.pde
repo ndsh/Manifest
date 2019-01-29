@@ -3,6 +3,7 @@ import peasy.*;
 import ch.bildspur.artnet.*;
 import controlP5.*;
 import processing.video.*;
+import processing.sound.*;
 
 PeasyCam camera;
 ArtNetClient artnet;
@@ -22,14 +23,17 @@ boolean offline = true;
 boolean debug = false;
 float sliderBrightness = 255;
 int sliderOptions = 0;
+int sliderOptions2 = 0;
 boolean rotate = false;
-float rotator = 0.001;
+float rotationSpeed = 0.001;
 
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
 int MANIFEST_HEIGHT = 300;
 
+AudioIn input;
+Amplitude loudness;
 
 
 void setup() {
@@ -51,8 +55,9 @@ void setup() {
   cp5 = new ControlP5(this);
   constructGUI();
     
-  movie = new Movie(this, "demos/test17.mp4");
+  movie = new Movie(this, "demos/test19.mp4");
   movie.loop();
+  
   
   createDemos();
 }
@@ -61,7 +66,7 @@ void draw() {
   background(bg);
   dragging();   
   stateMachine(state);
-  if(rotate) camera.rotateY(rotator);
+  if(rotate) camera.rotateY(rotationSpeed);
   
   manifest.update();
   manifest.display();

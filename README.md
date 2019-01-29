@@ -9,9 +9,27 @@ Proprietary software written in Processing.
 ## Status
 Current version runs fine in Processing. The real-life application test is missing and can only be conducted in mid/end February 2019.
 
+## Controls
+- Control options can be found on the left side in the panel.
+- 'Play' pause/unpause the animations. This freezes for real the demos but not the video (for now).
+- 'Offline' start/stop sending messages over artnet.
+- 'Rotate' the 3D manifest object
+- 'Sliderbrightness' controls the general brightness of the objects and all demos + LEDs
+- 'Rotationspeed' sets the speed of the object when it rotates (for show off purposes)
+- 'Slideroptions' + 'Slideroptions2' are used in various demos to control different parameters such as speed, thickness etc.
+
 ## Demos
-– Demo 1: Breathing ("Atmen") An implementation of the "Apple Breathing LED"
-**Rest of the Demos are not available yet**
+– Demo 0: ("Video loop") Loads a video of the size 720x300 pixels
+– Demo 1: ("Atmen") An implementation of the "Apple Breathing LED"
+– Demo 2: ("Lichtstreifen") An adjustable light stripe wanders horizontally over the screen
+– Demo 3: ("Hochwandern") An adjustable light stripe wanders vertically over the screen
+– Demo 4: ("Soundreaktiv") Maps microphone input to brightness levels
+– Demo 5: ("Perlin") Perlin Noise 3D. Slideroptions: Octave control from 0 – 8 / Slideroptions2: Falloff 0f – 1f
+– Demo 6: ("Flocking") Flocking demo by D. Shiffman
+– Demo 7: ("Ping pong") It's a ping pong demo?
+– Demo 11: ("Blob") Should be a blob. Looks like stars. Don't ask me.
+
+- **Rest of the Demos are not available yet**
 
 ## Dependencies
 * [Artnet4j 0.4.0](https://github.com/cansik/artnet4j)

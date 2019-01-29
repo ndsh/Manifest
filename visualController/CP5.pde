@@ -21,14 +21,28 @@ void constructGUI() {
     .setSize(100, 8)
     .setColorValue(black)
     ;
-  cp5.addSlider("sliderOptions")
-    .setRange(0, 255)
+  cp5.addSlider("rotationSpeed")
+    .setRange(0, 0.05)
     .setPosition(15, 110)
+    .setValue(0.01)
+    .setSize(100, 8)
+    .setColorValue(black)
+    ;
+  cp5.addSlider("sliderOptions")
+    .setRange(0, 100)
+    .setPosition(15, 120)
     .setValue(255)
     .setSize(100, 8)
     .setColorValue(black)
-    ; 
-
+    ;
+  cp5.addSlider("sliderOptions2")
+    .setRange(0, 100)
+    .setPosition(15, 130)
+    .setValue(255)
+    .setSize(100, 8)
+    .setColorValue(black)
+    ;
+    
   stateTitle = cp5.addTextlabel("label1")
     .setText("Current state: ")
     .setPosition(10, 10)
@@ -81,8 +95,6 @@ void constructGUI() {
 
   cp5.setColorForeground(gray);
   cp5.setColorBackground(black);
-  //cp5.setColorLabel(0xffdddddd);
-  //  cp5.setColorValue(0xffff88ff);
   cp5.setColorActive(white);
 }
 
