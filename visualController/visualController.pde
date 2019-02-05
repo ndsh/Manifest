@@ -2,13 +2,20 @@
 import peasy.*;
 import ch.bildspur.artnet.*;
 import controlP5.*;
-import processing.video.*;
 import processing.sound.*;
+
+// linux video
+import gohai.glvideo.*;
+GLMovie movie;
+
+// osx video
+//import processing.video.*;
+//Movie movie;
 
 PeasyCam camera;
 ArtNetClient artnet;
 ControlP5 cp5; 
-Movie movie;
+
 
 Manifest manifest;
 
@@ -54,8 +61,10 @@ void setup() {
   
   cp5 = new ControlP5(this);
   constructGUI();
-    
-  movie = new Movie(this, "demos/test17.mp4");
+  
+  
+  // osx movie = new Movie(this, "demos/test19.mp4");
+  movie = new GLMovie(this, "demos/test19.mp4");
   movie.loop();
   
   
@@ -67,7 +76,7 @@ void draw() {
   dragging();   
   stateMachine(state);
   if(rotate) camera.rotateY(rotationSpeed);
-  
+  getMovieFrame();
   manifest.update();
   manifest.display();
   
@@ -75,7 +84,16 @@ void draw() {
   drawGUI();
 }
 
+void getMovieFrame() {
+  if(movie.available()) {
+    movie.read();
+    if(play && state == NONE) currentFrame = movie;
+  }
+}
+
+/*
 void movieEvent(Movie m) {
   m.read();
   if(play && state == NONE) currentFrame = movie;
 }
+*/
