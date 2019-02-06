@@ -5,12 +5,12 @@ import controlP5.*;
 import processing.sound.*;
 
 // linux video
-import gohai.glvideo.*;
-GLMovie movie;
+//import gohai.glvideo.*;
+//GLMovie movie;
 
 // osx video
-//import processing.video.*;
-//Movie movie;
+import processing.video.*;
+Movie movie;
 
 PeasyCam camera;
 ArtNetClient artnet;
@@ -26,7 +26,8 @@ color object = color(40);
 PImage currentFrame;
 boolean play = true;
 boolean flip = true;
-boolean offline = true;
+boolean offline = false;
+boolean drawing = true;
 boolean debug = false;
 float sliderBrightness = 255;
 int sliderOptions = 0;
@@ -63,8 +64,10 @@ void setup() {
   constructGUI();
   
   
-  // osx movie = new Movie(this, "demos/test19.mp4");
-  movie = new GLMovie(this, "demos/test19.mp4");
+  // osx
+  movie = new Movie(this, "demos/test19_bl.mp4");
+  // linux
+  //movie = new GLMovie(this, "demos/test19.mp4");
   movie.loop();
   
   
@@ -76,7 +79,7 @@ void draw() {
   dragging();   
   stateMachine(state);
   if(rotate) camera.rotateY(rotationSpeed);
-  getMovieFrame();
+  //getMovieFrame();
   manifest.update();
   manifest.display();
   
@@ -91,9 +94,8 @@ void getMovieFrame() {
   }
 }
 
-/*
+
 void movieEvent(Movie m) {
   m.read();
   if(play && state == NONE) currentFrame = movie;
 }
-*/
