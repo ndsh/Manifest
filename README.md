@@ -11,9 +11,10 @@ Current version runs fine in Processing. The real-life application test is missi
 
 ## Controls
 - Control options can be found on the left side in the panel.
-- 'Play' pause/unpause the animations. This freezes for real the demos but not the video (for now).
+- 'Play' pause/unpause the animations. This freezes for real the demos but not the video (for now). Basically stops the redraw.
 - 'Offline' start/stop sending messages over artnet.
 - 'Rotate' the 3D manifest object
+- 'Draw' draw/not draw the 3d object on screen
 - 'Sliderbrightness' controls the general brightness of the objects and all demos + LEDs
 - 'Rotationspeed' sets the speed of the object when it rotates (for show off purposes)
 - 'Slideroptions' + 'Slideroptions2' are used in various demos to control different parameters such as speed, thickness etc.
@@ -40,6 +41,9 @@ Current version runs fine in Processing. The real-life application test is missi
 * [Processing Video 1.0.1+](https://github.com/processing/processing-video)
 * [Controlp5 2.2.6](https://github.com/sojamo/controlp5/releases)
 * [PeasyCam 3.0.2](http://mrfeinberg.com/peasycam/)
+
+## Input
+* Input has to be a H.264 conform "baseline" profile encode video, so it can run both on OSX and Linux machines.
 
 An input movie is mapped to a rotatable 3D digital representation of the installation while over artnet 540 stripes (each equipped with 40 LEDs) from [SchnickSchnackSystems](https://schnick.schnack.systems/produkte/led-komponenten/led-streifen-m/) receive the same signals and display it on the *real* thing.
 
