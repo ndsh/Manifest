@@ -76,34 +76,32 @@ class Manifest {
   }
   
   void display() {
-    if(drawing) {
-      fill(object);
-      stroke(0,0,0);
-      //box(390.5, 290, 40.5); // original inner cube
-      pushMatrix();
-        translate(0,0,20);
-        box(5, 290, 5);
-        translate(0,0,-40);
-        box(5, 290, 5);
-        translate(-195,0,0);
-        box(5, 290, 5);
-        translate(0,0,40);
-        box(5, 290, 5);
-        translate(390,0,0);
-        box(5, 290, 5);
-        translate(0,0,-40);
-        box(5, 290, 5);
-        translate(-195,120,20);
-        box(390.5, 15, 40.5);
-      popMatrix();
-      
-      pushMatrix();
-        translate(-175, -145, 0);
-        for (Stripe stripe : stripes) {
-          stripe.display();
-        }
-      popMatrix();
-    }
+    fill(object);
+    stroke(0,0,0);
+    //box(390.5, 290, 40.5); // original inner cube
+    pushMatrix();
+      translate(0,0,20);
+      box(5, 290, 5);
+      translate(0,0,-40);
+      box(5, 290, 5);
+      translate(-195,0,0);
+      box(5, 290, 5);
+      translate(0,0,40);
+      box(5, 290, 5);
+      translate(390,0,0);
+      box(5, 290, 5);
+      translate(0,0,-40);
+      box(5, 290, 5);
+      translate(-195,120,20);
+      box(390.5, 15, 40.5);
+    popMatrix();
+    
+    pushMatrix();
+      translate(-175, -145, 0);
+      for (Stripe stripe : stripes) {
+        stripe.display();
+      }
+    popMatrix();
   }
   
   void setPixel(int x, int y, int value) {

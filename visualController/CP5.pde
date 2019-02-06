@@ -5,7 +5,6 @@ Textlabel inputLabel;
 CheckBox playCheckbox;
 CheckBox offlineCheckbox;
 CheckBox rotateCheckbox;
-CheckBox drawCheckbox;
 
 
 void constructGUI() {
@@ -79,22 +78,17 @@ void constructGUI() {
     .setSize(32, 8)
     .addItem("rotate", 1)
     ;
-  drawCheckbox = cp5.addCheckBox("drawCheckbox")
-    .setPosition(14, 60)
-    .setSize(32, 8)
-    .addItem("drawing", 1)
-    ;
 
   cp5.addButton("prevDemo")
     .setValue(0)
     .setLabel("prev")
-    .setPosition(14, 70)
+    .setPosition(14, 60)
     .setSize(32, 16)
     ;
   cp5.addButton("nextDemo")
     .setValue(0)
     .setLabel("next")
-    .setPosition(50, 70)
+    .setPosition(50, 60)
     .setSize(32, 16)
     ;
 
@@ -153,11 +147,6 @@ void offlineCheckbox(float[] a) {
 void rotateCheckbox(float[] a) {
   if (a[0] == 1f) rotate = true;
   else rotate = false;
-}
-
-void drawCheckbox(float[] a) {
-  if (a[0] == 1f) drawing = true;
-  else drawing = false;
 }
 
 public void nextDemo(int theValue) {
