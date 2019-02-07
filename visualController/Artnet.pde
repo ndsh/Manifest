@@ -1,10 +1,13 @@
 int universeSizeA = 120;
 int universeSizeB = 40;
 int univerSizeMax = universeSizeA+universeSizeB;
+
+int universalSize = 80; // später 360 weil 9 streifen * 40 leds
+
 int maxLEDs = 120;
 // byte[zeilen][spalten]
 byte[][] dmxA = new byte[4][120];
-byte[][] dmxB = new byte[4][40];
+byte[][] dmxB = new byte[4][universalSize];
 int universes = 4; // manifest wird 60 universen haben
 
 byte[][] pixelTemp = new byte[60][360];
@@ -26,6 +29,7 @@ void feedFrame(PImage p) {
   }
 }
 
+/*
 void mapPixels(int x, int y, int brightness) {
   if(x >= 0 && x <= 39) {
     dmxB[y][x] = (byte)brightness;
@@ -33,6 +37,13 @@ void mapPixels(int x, int y, int brightness) {
     //int remapped = (int)map(x, 0, 120, 80, 0);
     int remapped = 120-x;
     dmxA[y][remapped] = (byte)brightness;
+  }
+}
+*/
+
+void mapPixels(int x, int y, int brightness) {
+  if(x >= 0 && x <= 79) {
+    dmxB[y][x] = (byte)brightness;
   }
 }
 
