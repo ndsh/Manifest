@@ -42,7 +42,7 @@ void mapPixels(int x, int y, int brightness) {
 */
 
 void mapPixels(int x, int y, int brightness) {
-  if(x >= 0 && x <= 79) {
+  if(x >= 0 && x < universalSize) {
     dmxB[y][x] = (byte)brightness;
   }
 }

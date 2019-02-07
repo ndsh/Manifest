@@ -2,6 +2,7 @@ Textlabel stateTitle;
 Textlabel stateLabel;
 Textlabel frameRateLabel;
 Textlabel inputLabel;
+Textlabel brightnessInPercLabel;
 CheckBox playCheckbox;
 CheckBox offlineCheckbox;
 CheckBox rotateCheckbox;
@@ -59,6 +60,11 @@ void constructGUI() {
   inputLabel = cp5.addTextlabel("label4")
     .setText("2D TEXTURE VIEW")
     .setPosition(10, height-140)
+    ;
+    
+  brightnessInPercLabel = cp5.addTextlabel("label5")
+    .setText("BRIGHTNESS: %")
+    .setPosition(10, 90)
     ;
 
 
@@ -131,7 +137,9 @@ void drawGUI() {
 }
 
 void sliderBrightness(int in) {
+  float br = map(in, 0, 255, 0, 100);
   sliderBrightness = in;
+  brightnessInPercLabel.setText("BRIGHTNESS: "+ round(br) +"%");
 }
 
 void playCheckbox(float[] a) {
