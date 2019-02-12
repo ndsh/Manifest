@@ -3,6 +3,7 @@ import peasy.*;
 import ch.bildspur.artnet.*;
 import controlP5.*;
 import processing.sound.*;
+import java.util.*;
 
 // linux video
 //import gohai.glvideo.*;
@@ -68,8 +69,8 @@ void setup() {
   // linux movie = new GLMovie(this, "demos/test19.mp4");
   movie.loop();
   
-  
   createDemos();
+  
 }
 
 void draw() {

@@ -11,6 +11,7 @@ byte[][] dmxB = new byte[4][universalSize];
 int universes = 4; // manifest wird 60 universen haben
 
 byte[][] pixelTemp = new byte[60][360];
+int[][] updatedStripes = new int[60][360];
 
 // PIXEL ROUTER
 // 0 = ACAC

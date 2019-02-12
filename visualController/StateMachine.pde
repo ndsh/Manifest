@@ -1,5 +1,5 @@
 // FSM
-int state = 0;
+int state = 11;
 static final int NONE = 0;
 static final int DEMO1 = 1;
 static final int DEMO2 = 2;
@@ -23,6 +23,7 @@ Demo4 demo4;
 Demo5 demo5;
 Demo6 demo6;
 Demo7 demo7;
+Demo10 demo10;
 Demo11 demo11;
 void createDemos() {
   demo1 = new Demo1();
@@ -32,6 +33,7 @@ void createDemos() {
   demo5 = new Demo5();
   demo6 = new Demo6();
   demo7 = new Demo7();
+  demo10 = new Demo10();
   demo11 = new Demo11();
 }
 /*
@@ -46,11 +48,10 @@ Demo10 demo10 = new Demo10();
 */
 
 static final String[] stateNames = {
-  "Video Loop",
-  "Atmen", "Lichtstreifen", "Hochwandern",
-  "Soundreaktiv", "Perlin", "Flocking",
-  "PingPong", "Wellen", "Invertierte Wellen",
-  "Zeilen", "Perlin2"
+  "Video Loop", "Atmen", "Lichtstreifen",
+  "Hochwandern", "Soundreaktiv", "Perlin",
+  "Flocking", "PingPong", "Wellen",
+  "Invertierte Wellen", "Perlin2", "Statische Bilder"
 };
 
 String getStateName(int state) {
@@ -58,6 +59,7 @@ String getStateName(int state) {
 }
 
 void stateMachine(int state) {
+  
    switch(state) {
     case NONE:
       // feed the manifest with data
@@ -133,6 +135,16 @@ void stateMachine(int state) {
       demo7.update();
       demo7.display();
       currentFrame = demo7.getDisplay(); 
+      manifest.setFrame(transformFrame(currentFrame));
+      
+      feedFrame(transformFrame(currentFrame));
+      send();
+    break;
+    
+    case DEMO10:
+      demo10.update();
+      demo10.display();
+      currentFrame = demo10.getDisplay(); 
       manifest.setFrame(transformFrame(currentFrame));
       
       feedFrame(transformFrame(currentFrame));
@@ -656,8 +668,9 @@ class Demo7 {
   }
 }
 
+
 // Perlin2
-class Demo11 {
+class Demo10 {
   PGraphics pg;
   ArrayList<Particle> particles_a = new ArrayList<Particle>();
   ArrayList<Particle> particles_b = new ArrayList<Particle>();
@@ -666,7 +679,7 @@ class Demo11 {
   int nums = 500;
   int noiseScale = 800;
 
-  public Demo11() {
+  public Demo10() {
     pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT, P3D);
     pg.beginDraw();
     pg.colorMode(HSB, 360, 100, 255);
@@ -760,5 +773,90 @@ class Demo11 {
       pg.fill(0,0,255);
       pg.ellipse(pos.x, pos.y, r, r);
     }
+  }
+}
+
+
+// Bild
+class Demo11 {
+  PGraphics pg;
+  PImage p;
+  // image importer
+  String path = "img";
+  File folder = dataFile(path);
+  String[] filenames;
+  StringList files = new StringList();
+  boolean foundFiles = false;
+  int pointer = 0;
+  
+  public Demo11() {
+    pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
+    pg.beginDraw();
+    pg.colorMode(HSB, 360, 100, 255);
+    pg.endDraw();
+
+    initList();
+  }
+  
+  void initList() {
+    File[] pics = folder.listFiles();
+    filenames = new String[pics.length];
+    for (int i = 0; i < pics.length; filenames[i] = pics[i++].getPath());
+    if(filenames.length > 0) {
+      foundFiles = true;
+      for(int i = 0; i< filenames.length; i++) {
+        String[] absolutePath = split(filenames[i], '/');
+        files.append(absolutePath[absolutePath.length-1]);
+      }
+    }
+    if(foundFiles) {
+      for (int i = files.size() - 1; i >= 0; i--) if (files.get(i).equals(".DS_Store")) files.remove(i);
+      List l = new ArrayList();
+      for (String f : files) {
+        l.add(f);
+      }
+      
+      cp5.get(ScrollableList.class, "images").addItems(l).setPosition(14, 160);
+      getImage();
+      
+    }
+  }
+  
+  void update() {
+    if(play) {
+      
+    }
+  }
+  
+  void display() {
+    pg.beginDraw();
+    pg.background(0);
+    pg.noStroke();
+    pg.image(p, 0, 0);
+    pg.endDraw();
+  }
+  
+  PImage getDisplay() {
+    return pg;
+  }
+  
+  void setImage(String s) {
+    for(int i = 0; i<files.size(); i++) {
+       if(files.get(i).equals(s)) {
+         pointer = i;
+         getImage();
+         return;
+       }
+    }
+  }
+  
+  void getImage() {
+    println("loading file: "+ files.get(pointer));
+    p = loadImage(sketchPath("") +"data/"+path+"/"+files.get(pointer));
+  }
+ 
+  
+  void reset() {
+    
   }
 }

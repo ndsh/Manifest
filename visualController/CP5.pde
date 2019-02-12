@@ -6,6 +6,7 @@ Textlabel brightnessInPercLabel;
 CheckBox playCheckbox;
 CheckBox offlineCheckbox;
 CheckBox rotateCheckbox;
+ScrollableList imageList;
 
 
 void constructGUI() {
@@ -97,8 +98,19 @@ void constructGUI() {
     .setPosition(50, 60)
     .setSize(32, 16)
     ;
+    
+  cp5.addScrollableList("images")
+     .setPosition(14, 160)
+     .setSize(160, 100)
+     .setBarHeight(20)
+     .setItemHeight(20)
+     .setType(ControlP5.DROPDOWN)
+     
+     //.addItems(l)
+     // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
+     ;
 
-
+  checkImageDropdown();
   cp5.setColorForeground(gray);
   cp5.setColorBackground(black);
   cp5.setColorActive(white);
@@ -151,18 +163,33 @@ void offlineCheckbox(float[] a) {
   if (a[0] == 1f) offline = true;
   else offline = false;
 }
-
+ 
 void rotateCheckbox(float[] a) {
   if (a[0] == 1f) rotate = true;
   else rotate = false;
 }
 
-public void nextDemo(int theValue) {
+void nextDemo(int theValue) {
   state++;
   if (state > MAX_STATES-1) state = 0;
+  checkImageDropdown();
 }
 
-public void prevDemo(int theValue) {
+void prevDemo(int theValue) {
   state--;
   if (state < 0) state = MAX_STATES-1;
+  
+  checkImageDropdown();
+}
+
+void images(int n) {
+  String s = (String)cp5.get(ScrollableList.class, "images").getItem(n).get("text");
+  // check if this is a valid image?
+  if(s.length() > 0) demo11.setImage(s);
+  else println("[#] ERROR : the image is not valid. string size is low or equal than 0");
+}
+
+void checkImageDropdown() {
+  if(state == 11) cp5.get(ScrollableList.class, "images").show();
+  else cp5.get(ScrollableList.class, "images").hide();
 }
