@@ -1,5 +1,5 @@
 // FSM
-int state = 11;
+int state = 0;
 static final int NONE = 0;
 static final int DEMO1 = 1;
 static final int DEMO2 = 2;
@@ -218,7 +218,7 @@ class Demo2 {
   
   void update() {
     if(play) {
-      interval = (int)map(sliderOptions2, 0, 100, 200, 0);
+      interval = round(map(sliderOptions2, 0, 100, 200, 0));
       if(millis() - lastMillis > interval) {
         lastMillis = millis();
         position++;
@@ -233,7 +233,7 @@ class Demo2 {
       pg.background(0);
       pg.noStroke();
       pg.fill(lightGain(0,0,255));
-      int thick = (int)map(sliderOptions, 0, 100, 1, 100);
+      int thick = round(map(sliderOptions, 0, 100, 1, 100));
       pg.rect(position, 0, thick, pg.height);
       pg.endDraw();
     }
@@ -323,7 +323,7 @@ class Demo4 {
       // loudness.analyze() return a value between 0 and 1. To adjust
       // the scaling and mapping of an ellipse we scale from 0 to 0.5
       float volume = loudness.analyze();
-      size = int(map(volume, 0, 0.5, 0, 255));
+      size = round(map(volume, 0, 0.5, 0, 255));
     }
   }
   
@@ -366,7 +366,7 @@ class Demo5 {
   void update() {
     if(play) {
       // Optional: adjust noise detail here
-      int octave = (int)map(sliderOptions, 0, 100, 8, 0);
+      int octave = round(map(sliderOptions, 0, 100, 8, 0));
       float falloff = map(sliderOptions2, 0, 100, 0.0f, 1.0f);
       noiseDetail(octave,falloff);
       
@@ -631,11 +631,11 @@ class Demo7 {
   
   void update() {
     if(play) {
-        interval = (int)map(sliderOptions2, 0,100, 50, 0);
+        interval = round(map(sliderOptions2, 0,100, 50, 0));
         if(millis() - lastMillis < interval) return;
         lastMillis = millis();
         
-        int speed = (int)map(sliderOptions2, 0,100, 5, 20);
+        int speed = round(map(sliderOptions2, 0,100, 5, 20));
         if(direction) position+= speed;
         else position-= speed;
         
@@ -654,7 +654,7 @@ class Demo7 {
     pg.background(0);
     pg.noStroke();
     pg.fill(lightGain(0,0,255));
-    int thick = (int)map(sliderOptions, 0, 100, 1, 100);
+    int thick = round(map(sliderOptions, 0, 100, 1, 100));
     pg.rect(position, 0, thick, pg.height);
     pg.endDraw();
   }

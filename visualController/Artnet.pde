@@ -2,11 +2,11 @@ int universeSizeA = 120;
 int universeSizeB = 40;
 int univerSizeMax = universeSizeA+universeSizeB;
 
-int universalSize = 80; // später 360 weil 9 streifen * 40 leds
+int universalSize = 360; // später 360 weil 9 streifen * 40 leds
 
 int maxLEDs = 120;
 // byte[zeilen][spalten]
-byte[][] dmxA = new byte[4][120];
+byte[][] dmxA = new byte[4][universalSize];
 byte[][] dmxB = new byte[4][universalSize];
 int universes = 4; // manifest wird 60 universen haben
 
@@ -16,6 +16,7 @@ int[][] updatedStripes = new int[60][360];
 // PIXEL ROUTER
 // 0 = ACAC
 
+// 15 pixel router hier?!
 static final String router1 = "2.12.4.83";
 static final String router2 = "2.161.30.223";
 
@@ -30,20 +31,9 @@ void feedFrame(PImage p) {
   }
 }
 
-/*
-void mapPixels(int x, int y, int brightness) {
-  if(x >= 0 && x <= 39) {
-    dmxB[y][x] = (byte)brightness;
-  } else if(x > 39 && x <= 120) { 
-    //int remapped = (int)map(x, 0, 120, 80, 0);
-    int remapped = 120-x;
-    dmxA[y][remapped] = (byte)brightness;
-  }
-}
-*/
-
 void mapPixels(int x, int y, int brightness) {
   if(x >= 0 && x < universalSize) {
+    dmxA[y][x] = (byte)brightness;
     dmxB[y][x] = (byte)brightness;
   }
 }
@@ -62,8 +52,18 @@ void reset() {
 void send() {
   if(!offline) {
     for(int u = 0; u < universes; u++) {
-      //artnet.unicastDmx(router1, 0, u, dmxA[u]);
+      artnet.unicastDmx(router1, 0, u, dmxA[u]);
       artnet.unicastDmx(router2, 0, u, dmxB[u]);
     }
   }
+}
+
+class Pixelrouter {
+  String ip;
+  Pixelrouter() {
+  }
+}
+
+class LEDRow {
+  
 }

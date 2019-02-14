@@ -58,50 +58,54 @@ class Manifest {
   */
   
   void update() {
-    if(isUpdatable && frameType > 0) {
-      reset();
-      if(frameType == 1) {
-         p.loadPixels();
-         for(int x = 0; x<720; x++) {
-           for(int y = 0; y<30; y++) {
-             color c = p.pixels[y*p.width+x];//color c = p.get(x,y);
-             setPixel(x,y, lightGain((int)brightness(c)));
+    if(redraw) {
+      if(isUpdatable && frameType > 0) {
+        reset();
+        if(frameType == 1) {
+           p.loadPixels();
+           for(int x = 0; x<720; x++) {
+             for(int y = 0; y<30; y++) {
+               color c = p.pixels[y*p.width+x];//color c = p.get(x,y);
+               setPixel(x,y, lightGain((int)brightness(c)));
+             }
            }
-         }
-      } else if(frameType == 2) {
+        } else if(frameType == 2) {
+        }
+        
+        isUpdatable = false;
       }
-      
-      isUpdatable = false;
     }
   }
   
   void display() {
-    fill(object);
-    stroke(0,0,0);
-    //box(390.5, 290, 40.5); // original inner cube
-    pushMatrix();
-      translate(0,0,20);
-      box(5, 290, 5);
-      translate(0,0,-40);
-      box(5, 290, 5);
-      translate(-195,0,0);
-      box(5, 290, 5);
-      translate(0,0,40);
-      box(5, 290, 5);
-      translate(390,0,0);
-      box(5, 290, 5);
-      translate(0,0,-40);
-      box(5, 290, 5);
-      translate(-195,120,20);
-      box(390.5, 15, 40.5);
-    popMatrix();
-    
-    pushMatrix();
-      translate(-175, -145, 0);
-      for (Stripe stripe : stripes) {
-        stripe.display();
-      }
-    popMatrix();
+    if(redraw) {
+      fill(object);
+      stroke(0,0,0);
+      //box(390.5, 290, 40.5); // original inner cube
+      pushMatrix();
+        translate(0,0,20);
+        box(5, 290, 5);
+        translate(0,0,-40);
+        box(5, 290, 5);
+        translate(-195,0,0);
+        box(5, 290, 5);
+        translate(0,0,40);
+        box(5, 290, 5);
+        translate(390,0,0);
+        box(5, 290, 5);
+        translate(0,0,-40);
+        box(5, 290, 5);
+        translate(-195,120,20);
+        box(390.5, 15, 40.5);
+      popMatrix();
+      
+      pushMatrix();
+        translate(-175, -145, 0);
+        for (Stripe stripe : stripes) {
+          stripe.display();
+        }
+      popMatrix();
+    }
   }
   
   void setPixel(int x, int y, int value) {
@@ -118,7 +122,7 @@ class Manifest {
     int stripe = (x/40)+_y;
     
     if(stripe%18 > 8 && stripe%18 < 16) {    
-      stripe = (int)map(stripe%18, 9, 15, 15, 9);
+      stripe = round(map(stripe%18, 9, 15, 15, 9));
       stripe += _y;    
     } else if(stripe%18 == 16) {
       // baustelle ??

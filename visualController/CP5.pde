@@ -6,6 +6,7 @@ Textlabel brightnessInPercLabel;
 CheckBox playCheckbox;
 CheckBox offlineCheckbox;
 CheckBox rotateCheckbox;
+CheckBox redrawCheckbox;
 ScrollableList imageList;
 
 
@@ -18,28 +19,28 @@ void constructGUI() {
 
   cp5.addSlider("sliderBrightness")
     .setRange(0, 255)
-    .setPosition(15, 100)
+    .setPosition(15, 110)
     .setValue(255)
     .setSize(100, 8)
     .setColorValue(black)
     ;
   cp5.addSlider("rotationSpeed")
     .setRange(0, 0.05)
-    .setPosition(15, 110)
+    .setPosition(15, 120)
     .setValue(0.01)
     .setSize(100, 8)
     .setColorValue(black)
     ;
   cp5.addSlider("sliderOptions")
     .setRange(0, 100)
-    .setPosition(15, 120)
+    .setPosition(15, 130)
     .setValue(255)
     .setSize(100, 8)
     .setColorValue(black)
     ;
   cp5.addSlider("sliderOptions2")
     .setRange(0, 100)
-    .setPosition(15, 130)
+    .setPosition(15, 140)
     .setValue(255)
     .setSize(100, 8)
     .setColorValue(black)
@@ -65,7 +66,7 @@ void constructGUI() {
     
   brightnessInPercLabel = cp5.addTextlabel("label5")
     .setText("BRIGHTNESS: %")
-    .setPosition(10, 90)
+    .setPosition(12, 100)
     ;
 
 
@@ -85,17 +86,21 @@ void constructGUI() {
     .setSize(32, 8)
     .addItem("rotate", 1)
     ;
-
+  redrawCheckbox = cp5.addCheckBox("redrawCheckbox")
+    .setPosition(14, 60)
+    .setSize(32, 8)
+    .addItem("redraw", 1)
+    ;
   cp5.addButton("prevDemo")
     .setValue(0)
     .setLabel("prev")
-    .setPosition(14, 60)
+    .setPosition(14, 70)
     .setSize(32, 16)
     ;
   cp5.addButton("nextDemo")
     .setValue(0)
     .setLabel("next")
-    .setPosition(50, 60)
+    .setPosition(50, 70)
     .setSize(32, 16)
     ;
     
@@ -114,6 +119,19 @@ void constructGUI() {
   cp5.setColorForeground(gray);
   cp5.setColorBackground(black);
   cp5.setColorActive(white);
+  
+  // settings.json werte einpassen
+  // checkboxes
+  float[] y = {1f};
+  float[] n = {0f};
+  
+  playCheckbox.setArrayValue((play?y:n));
+  offlineCheckbox.setArrayValue((offline?y:n));
+  rotateCheckbox.setArrayValue((rotate?y:n));
+  redrawCheckbox.setArrayValue((redraw?y:n));
+  println(sliderBrightness);
+  cp5.getController("sliderBrightness").setValue(sliderBrightness);
+
 }
 
 void updateGUI() {
@@ -132,8 +150,10 @@ void drawGUI() {
   if (currentFrame!= null) {
     pushStyle();
     stroke(0);
+    //image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, width/8, height/8);
+    float f = 3.6; // currentFrame.with / 200 pixel breite vom menü
 
-    image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, width/5, height/5);
+    image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, currentFrame.width/f, currentFrame.height/f);
     popStyle();
   }
   cp5.draw();
@@ -167,6 +187,11 @@ void offlineCheckbox(float[] a) {
 void rotateCheckbox(float[] a) {
   if (a[0] == 1f) rotate = true;
   else rotate = false;
+}
+
+void redrawCheckbox(float[] a) {
+  if (a[0] == 1f) redraw = true;
+  else redraw = false;
 }
 
 void nextDemo(int theValue) {

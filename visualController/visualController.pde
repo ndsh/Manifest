@@ -29,16 +29,18 @@ boolean play = true;
 boolean flip = true;
 boolean offline = true;
 boolean debug = false;
+boolean rotate = false;
+boolean redraw = true;
 float sliderBrightness = 255;
 int sliderOptions = 0;
 int sliderOptions2 = 0;
-boolean rotate = false;
+
 float rotationSpeed = 0.001;
 
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
-int MANIFEST_HEIGHT = 300;
+int MANIFEST_HEIGHT = 240;
 
 AudioIn input;
 Amplitude loudness;
@@ -48,8 +50,9 @@ void setup() {
   size(1000,600,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
+  //println(sliderBrightness);
   loadSettings("data/settings.json");
-  
+  //println(sliderBrightness);
   manifest = new Manifest(object);
 
   camera = new PeasyCam(this, 100);

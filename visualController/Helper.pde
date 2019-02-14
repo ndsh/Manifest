@@ -21,8 +21,7 @@ PImage transformFrame(PImage s) {
   destination.background(0);
   destination.endDraw();
   s.loadPixels();
-  
-  int factor = s.height / destination.height;
+  float factor = s.height / destination.height;
   int c = 0;
   destination.beginDraw();
   for(int y = 0; y<s.height; y+=factor) {
@@ -52,19 +51,19 @@ void dragging() {
 }
 
 int lightGain(int val) {
-  int calc = (int)map(val, 0, 255, 0, (int)sliderBrightness);
+  int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
   return calc;
 }
 
 int lightGain(float val) {
-  int calc = (int)map(val, 0, 255, 0, (int)sliderBrightness);
+  int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
   return calc;
 }
 
 int lightGain(int h, int s, int b) {
-  int calc = (int)map(color(h,s,b), 0, 255, 0, (int)sliderBrightness);
+  int calc = round(map(color(h,s,b), 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
   return calc;
 }
@@ -86,9 +85,12 @@ void loadSettings(String s) {
   play = settings.getBoolean("play");
   flip = settings.getBoolean("flip");
   offline = settings.getBoolean("offline");
-  
   debug = settings.getBoolean("debug");
+  rotate = settings.getBoolean("rotate");
+  redraw = settings.getBoolean("redraw"); 
+ 
   sliderBrightness = settings.getFloat("sliderBrightness");
+  
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
   MANIFEST_HEIGHT = settings.getInt("MANIFEST_HEIGHT");
 
