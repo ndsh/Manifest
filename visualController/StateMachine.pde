@@ -64,9 +64,10 @@ void stateMachine(int state) {
     case NONE:
       // feed the manifest with data
       if(play && currentFrame != null) {
-        manifest.setFrame(transformFrame(currentFrame));
-        feedFrame(transformFrame(currentFrame));
-        send();
+        //manifest.setFrame(transformFrame(currentFrame));
+        //feedFrame(transformFrame(currentFrame));
+        transformWrapper();
+        //send();
       }
     break;
     
@@ -74,90 +75,65 @@ void stateMachine(int state) {
       demo1.update();
       demo1.display();
       currentFrame = demo1.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
+      //send();
     break;
     
     case DEMO2:
       demo2.update();
       demo2.display();
       currentFrame = demo2.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
+      //send();
     break;
     
     case DEMO3:
       demo3.update();
       demo3.display();
       currentFrame = demo3.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
     
     case DEMO4:
       demo4.update();
       demo4.display();
       currentFrame = demo4.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
    
     case DEMO5:
       demo5.update();
       //demo5.display();
       currentFrame = demo5.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
     
     case DEMO6:
       demo6.update();
       //demo5.display();
       currentFrame = demo6.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
     
     case DEMO7:
       demo7.update();
       demo7.display();
       currentFrame = demo7.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
     
     case DEMO10:
       demo10.update();
       demo10.display();
       currentFrame = demo10.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
     
     case DEMO11:
       demo11.update();
       demo11.display();
       currentFrame = demo11.getDisplay(); 
-      manifest.setFrame(transformFrame(currentFrame));
-      
-      feedFrame(transformFrame(currentFrame));
-      send();
+      transformWrapper();
     break;
     
     }

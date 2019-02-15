@@ -9,6 +9,10 @@ void keyPressed() {
       rotate = !rotate;
       float r[] = {rotate?1f:0f};
       rotateCheckbox.setArrayValue(r);
+    } else if (key == 'd' || key == 'D' ) {
+      redraw = !redraw;
+      float r[] = {redraw?1f:0f};
+      redrawCheckbox.setArrayValue(r);
     }
   }
 }
@@ -26,10 +30,8 @@ PImage transformFrame(PImage s) {
   destination.beginDraw();
   for(int y = 0; y<s.height; y+=factor) {
       PImage p = s.get(0,y, 720, 1);
-      destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
-      //image(s, 0, c, 720, 1, 0, y, 720, 1);
+      //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
       destination.image(p, 0, c, 720, 1);
-      
       c++;
   }
   destination.endDraw();
@@ -37,7 +39,50 @@ PImage transformFrame(PImage s) {
   return destination;
 }
 
-void gTransformation() {
+void transformWrapper() {
+  PImage prev = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
+  
+  PImage transformed = transformFrame(currentFrame);
+  
+  manifest.setFrame(transformed);
+  
+  /*
+  // routine um differenz pixel ausfindig zu machen
+  if(previousFrame != null) {
+    prev = transformFrame(previousFrame);
+    prev.loadPixels();
+    transformed.loadPixels();
+    updatedPixels = new boolean[30][720];
+    updatedRows = new boolean[30];
+    
+    int count = 0;
+    changedPixels = false;
+    for(int y = 0; y<transformed.height; y++) {
+      for(int x = 0; x<transformed.width; x++) {
+        color c1 = transformed.pixels[y*transformed.width+x];
+        color c2 = prev.pixels[y*transformed.width+x];
+        if (!isSame(c1, c2)) {
+          if(!changedPixels) changedPixels = true;
+          updatedPixels[y][x] = true;
+          updatedRows[y] = true;
+          
+          count++;
+        }
+      }
+    }
+    //println("hallo" + updatedRows.size() + " : "+ updatedRows);
+    //println("---");
+    //println(count); // how many pixels have changed inbetween the previous and current framesx
+  }
+  */
+  // previousFrame und currentFrame abgleichen
+  // updatedPixels updaten
+  // rausfinden welche universen geupdatet werden müssen
+  feedFrame(transformed);
+  ;
+}
+
+void updateUniverses() {
 }
 
 void dragging() {
@@ -131,4 +176,20 @@ boolean isSame(color c1, color c2) {
   float g2 = c2 >> 8 & 0xFF;
  
   return r1 == r2 && b1 ==b2 && g1 == g2;
+}
+
+
+void getMovieFrame() {
+  if(movie.available()) {
+    movie.read();
+    if(play && state == NONE) currentFrame = movie;
+  }
+}
+
+
+void movieEvent(Movie m) {
+  m.read();
+  if(play && state == NONE) {    
+    currentFrame = movie;
+  }
 }

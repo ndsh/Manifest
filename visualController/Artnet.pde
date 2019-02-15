@@ -20,6 +20,7 @@ int[][] updatedStripes = new int[60][360];
 static final String router1 = "2.12.4.83";
 static final String router2 = "2.161.30.223";
 
+
 void feedFrame(PImage p) {
   //image(p, 0, 0);
   p.loadPixels();
@@ -31,6 +32,33 @@ void feedFrame(PImage p) {
   }
 }
 
+
+// neue feedFrame methode mit
+/*
+void feedFrame(PImage p) {
+  p.loadPixels();
+  color c = 0;
+  
+  //for(int y = 0; y<updatedRows.length; y++) {
+    for(int y = 0; y<totalRows; y++) {
+    if(updatedRows[y]) {
+      for(int x = 0; x<updatedPixels[y].length; x++) {
+        if(updatedPixels[y][x]) {
+          c = p.pixels[y*p.width+x]; //.get(x,y);
+          rows.get(y).setPixel(x, (byte)lightGain((int)brightness(c)));
+        }
+        
+      }
+    }
+    // updatedPixels = new boolean[30][720];
+    // updatedRows = new boolean[30];  
+  
+      //color c = p.pixels[y*p.width+x]; //.get(x,y);
+      //mapPixels(x,y, lightGain((int)brightness(c)));
+    
+  }
+}
+*/
 void mapPixels(int x, int y, int brightness) {
   if(x >= 0 && x < universalSize) {
     dmxA[y][x] = (byte)brightness;
@@ -57,3 +85,18 @@ void send() {
     }
   }
 }
+
+
+// only send "updatables"
+/*
+void send() {
+  if(!offline) {
+    for(int y = 0; y<totalRows; y++) {
+      if(updatedRows[y]) {
+        rows.get(y).send();
+      }
+    }
+    
+  }
+}
+*/

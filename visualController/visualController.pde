@@ -17,8 +17,17 @@ PeasyCam camera;
 ArtNetClient artnet;
 ControlP5 cp5; 
 
-
 Manifest manifest;
+// declare all routers
+ArrayList<Pixelrouter> routers = new ArrayList<Pixelrouter>();
+String[] routerIPs = {  // A/C + B/D router = 4 rows of LEDs
+  "2.12.4.83", "2.161.30.223", // prototyping routers
+};
+
+// declare all rows
+ArrayList<LEDRow> rows = new ArrayList<LEDRow>();
+int totalRows = 1;
+
 
 color bg = color(50);
 color object = color(40);
@@ -40,7 +49,11 @@ float rotationSpeed = 0.001;
 
 // we want to keep tabs on updated pixels so that later on we only send out
 // the updated universes! O P T I M I T A Z A T I O N
-boolean[][] updatedPixels = new boolean[240][720];
+boolean changedPixels = false;
+boolean[][] updatedPixels = new boolean[30][720];
+boolean[] updatedRows = new boolean[30]; // oder als arraylist?
+
+//boolean[][] updatedStripes = new boolean[240][360];
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
@@ -78,12 +91,32 @@ void setup() {
   
   createDemos();
   previousFrame = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
+  
+  // let's add some routers and led rows
+  // - - - - - - - - - - - - - - - - - - - - - -
+  for(int i = 0; i<routerIPs.length; i++) {
+    routers.add(new Pixelrouter(routerIPs[i]));
+  }
+  
+  int currentRouter = 0;
+  int counter = 0;
+  for(int i = 0; i<totalRows; i++) {
+    //println("id: "+ i + " / r0: "+ currentRouter + " | r1: "+ (currentRouter+1) + " | " + counter);
+    rows.add(new LEDRow(i, routers.get(currentRouter), routers.get(currentRouter+1)));
+    counter++;
+    if(counter > 3)  {
+      counter = 0;
+      currentRouter += 2;
+    }
+  }
+  // - - - - - - - - - - - - - - - - - - - - - -
 }
 
 void draw() {
   background(bg);
   dragging();   
   stateMachine(state);
+  send();
   if(rotate) camera.rotateY(rotationSpeed);
   //getMovieFrame();
   manifest.update();
@@ -96,19 +129,4 @@ void draw() {
   updateGUI();
   drawGUI();
   
-}
-
-void getMovieFrame() {
-  if(movie.available()) {
-    movie.read();
-    if(play && state == NONE) currentFrame = movie;
-  }
-}
-
-
-void movieEvent(Movie m) {
-  m.read();
-  if(play && state == NONE) {    
-    currentFrame = movie;
-  }
 }
