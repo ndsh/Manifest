@@ -22,11 +22,29 @@ Manifest manifest;
 ArrayList<Pixelrouter> routers = new ArrayList<Pixelrouter>();
 String[] routerIPs = {  // A/C + B/D router = 4 rows of LEDs
   "2.12.4.83", "2.161.30.223", // prototyping routers
+  
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13", // dummy
+  "2.0.0.13", "2.0.0.13" // dummy
+  
 };
 
 // declare all rows
 ArrayList<LEDRow> rows = new ArrayList<LEDRow>();
-int totalRows = 1;
+int totalRows = 15;
 
 
 color bg = color(50);
@@ -53,8 +71,6 @@ boolean changedPixels = false;
 boolean[][] updatedPixels = new boolean[30][720];
 boolean[] updatedRows = new boolean[30]; // oder als arraylist?
 
-//boolean[][] updatedStripes = new boolean[240][360];
-
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
 int MANIFEST_HEIGHT = 240;
@@ -67,9 +83,7 @@ void setup() {
   size(1000,600,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
-  //println(sliderBrightness);
   loadSettings("data/settings.json");
-  //println(sliderBrightness);
   manifest = new Manifest(object);
 
   camera = new PeasyCam(this, 100);
@@ -101,7 +115,6 @@ void setup() {
   int currentRouter = 0;
   int counter = 0;
   for(int i = 0; i<totalRows; i++) {
-    //println("id: "+ i + " / r0: "+ currentRouter + " | r1: "+ (currentRouter+1) + " | " + counter);
     rows.add(new LEDRow(i, routers.get(currentRouter), routers.get(currentRouter+1)));
     counter++;
     if(counter > 3)  {

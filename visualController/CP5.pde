@@ -104,15 +104,12 @@ void constructGUI() {
     .setSize(32, 16)
     ;
     
-  cp5.addScrollableList("images")
+  imageList = cp5.addScrollableList("imageList")
      .setPosition(14, 160)
      .setSize(160, 100)
      .setBarHeight(20)
      .setItemHeight(20)
-     .setType(ControlP5.DROPDOWN)
-     
-     //.addItems(l)
-     // .setType(ScrollableList.LIST) // currently supported DROPDOWN and LIST
+     .setType(ControlP5.LIST)
      ;
 
   checkImageDropdown();
@@ -149,31 +146,21 @@ void drawGUI() {
 
   // 2d texture preview
   if (currentFrame!= null) {
+    float f = 3.6; // currentFrame.with / 200 pixel breite vom menü
     pushStyle();
     stroke(0);
-    //image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, width/8, height/8);
-    float f = 3.6; // currentFrame.with / 200 pixel breite vom menü
     //if(previousFrame != null) image(previousFrame.get(0, 0, previousFrame.width, previousFrame.height), 0, height-220, previousFrame.width/f, previousFrame.height/f);
-    //if(previousFrame != null) println(previousFrame.toString() + " / "+ currentFrame.toString());
     image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, currentFrame.width/f, currentFrame.height/f);
     popStyle();
   }
   cp5.draw();
-
-  // source material
-  //image(movie.get(0,0, 320, 300), 0, 0);
-  //image(movie.get(320,0, 40, 300), 0, 0);
-  //image(movie.get(360,0, 320, 300), 0, 0);
-  //image(movie.get(680,0, 40, 300), 0, 0);
-
-
   camera.endHUD();
 }
 
 void sliderBrightness(int in) {
   float br = map(in, 0, 255, 0, 100);
-  //sliderBrightness = in;
-  brightnessInPercLabel.setText("BRIGHTNESS: "+ round(br) +"%");
+  sliderBrightness = in;
+  if(brightnessInPercLabel != null) brightnessInPercLabel.setText("BRIGHTNESS: "+ round(br) +"%");
 }
 
 void playCheckbox(float[] a) {
@@ -205,18 +192,19 @@ void nextDemo(int theValue) {
 void prevDemo(int theValue) {
   state--;
   if (state < 0) state = MAX_STATES-1;
-  
   checkImageDropdown();
 }
 
-void images(int n) {
-  String s = (String)cp5.get(ScrollableList.class, "images").getItem(n).get("text");
+void imageList(int n) {
+  String s = (String)cp5.get(ScrollableList.class, "imageList").getItem(n).get("text");
   // check if this is a valid image?
   if(s.length() > 0) demo11.setImage(s);
   else println("[#] ERROR : the image is not valid. string size is low or equal than 0");
 }
 
 void checkImageDropdown() {
-  if(state == 11) cp5.get(ScrollableList.class, "images").show();
-  else cp5.get(ScrollableList.class, "images").hide();
+  if(imageList != null) {
+    if(state == 11) cp5.get(ScrollableList.class, "imageList").show();
+    else cp5.get(ScrollableList.class, "imageList").hide();
+  }
 }

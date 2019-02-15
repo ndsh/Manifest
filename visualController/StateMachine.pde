@@ -791,7 +791,7 @@ class Demo11 {
         l.add(f);
       }
       
-      cp5.get(ScrollableList.class, "images").addItems(l).setPosition(14, 160);
+      cp5.get(ScrollableList.class, "imageList").addItems(l).setPosition(14, 160);
       getImage();
       
     }

@@ -40,50 +40,44 @@ PImage transformFrame(PImage s) {
 }
 
 void transformWrapper() {
-  PImage prev = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
-  
+  boolean useDifference = false;
   PImage transformed = transformFrame(currentFrame);
-  
   manifest.setFrame(transformed);
-  
-  /*
-  // routine um differenz pixel ausfindig zu machen
-  if(previousFrame != null) {
-    prev = transformFrame(previousFrame);
-    prev.loadPixels();
-    transformed.loadPixels();
-    updatedPixels = new boolean[30][720];
-    updatedRows = new boolean[30];
-    
-    int count = 0;
-    changedPixels = false;
-    for(int y = 0; y<transformed.height; y++) {
-      for(int x = 0; x<transformed.width; x++) {
-        color c1 = transformed.pixels[y*transformed.width+x];
-        color c2 = prev.pixels[y*transformed.width+x];
-        if (!isSame(c1, c2)) {
-          if(!changedPixels) changedPixels = true;
-          updatedPixels[y][x] = true;
-          updatedRows[y] = true;
-          
-          count++;
+  if(useDifference) {
+    PImage prev = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB); // falls differenz nicht gebraucht wird
+
+    // routine um differenz pixel ausfindig zu machen
+    if(previousFrame != null) {
+      prev = transformFrame(previousFrame);
+      prev.loadPixels();
+      transformed.loadPixels();
+      updatedPixels = new boolean[30][720];
+      updatedRows = new boolean[30];
+      
+      int count = 0;
+      changedPixels = false;
+      for(int y = 0; y<transformed.height; y++) {
+        for(int x = 0; x<transformed.width; x++) {
+          color c1 = transformed.pixels[y*transformed.width+x];
+          color c2 = prev.pixels[y*transformed.width+x];
+          if (!isSame(c1, c2)) {
+            if(!changedPixels) changedPixels = true;
+            updatedPixels[y][x] = true;
+            updatedRows[y] = true;
+            count++;
+          }
         }
       }
+      //println("hallo" + updatedRows.size() + " : "+ updatedRows);
+      //println("---");
+      //println(count); // how many pixels have changed inbetween the previous and current framesx
     }
-    //println("hallo" + updatedRows.size() + " : "+ updatedRows);
-    //println("---");
-    //println(count); // how many pixels have changed inbetween the previous and current framesx
-  }
-  */
-  // previousFrame und currentFrame abgleichen
-  // updatedPixels updaten
-  // rausfinden welche universen geupdatet werden müssen
+    
+  }  
   feedFrame(transformed);
-  ;
 }
 
-void updateUniverses() {
-}
+
 
 void dragging() {
   // ist noch ein bisschen schräg programmiert mit dem draggen

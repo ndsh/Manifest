@@ -4,7 +4,7 @@
  "offline": false,
  "debug": false,
  "redraw": true,
- "rotate": true,
+ "rotate": false,
  "sliderBrightness": 120,
  "MANIFEST_WIDTH": 720,
  "MANIFEST_HEIGHT": 238
