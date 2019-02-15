@@ -57,13 +57,3 @@ void send() {
     }
   }
 }
-
-class Pixelrouter {
-  String ip;
-  Pixelrouter() {
-  }
-}
-
-class LEDRow {
-  
-}

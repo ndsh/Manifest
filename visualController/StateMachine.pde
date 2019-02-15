@@ -65,7 +65,6 @@ void stateMachine(int state) {
       // feed the manifest with data
       if(play && currentFrame != null) {
         manifest.setFrame(transformFrame(currentFrame));
-        //reset(); //nötig?
         feedFrame(transformFrame(currentFrame));
         send();
       }

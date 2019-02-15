@@ -129,7 +129,7 @@ void constructGUI() {
   offlineCheckbox.setArrayValue((offline?y:n));
   rotateCheckbox.setArrayValue((rotate?y:n));
   redrawCheckbox.setArrayValue((redraw?y:n));
-  println(sliderBrightness);
+  
   cp5.getController("sliderBrightness").setValue(sliderBrightness);
 
 }
@@ -147,12 +147,14 @@ void drawGUI() {
   rect(0, 0, 200, height);
   popStyle();
 
+  // 2d texture preview
   if (currentFrame!= null) {
     pushStyle();
     stroke(0);
     //image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, width/8, height/8);
     float f = 3.6; // currentFrame.with / 200 pixel breite vom menü
-
+    if(previousFrame != null) image(previousFrame.get(0, 0, previousFrame.width, previousFrame.height), 0, height-220, previousFrame.width/f, previousFrame.height/f);
+    //if(previousFrame != null) println(previousFrame.toString() + " / "+ currentFrame.toString());
     image(currentFrame.get(0, 0, currentFrame.width, currentFrame.height), 0, height-120, currentFrame.width/f, currentFrame.height/f);
     popStyle();
   }

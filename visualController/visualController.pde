@@ -25,6 +25,7 @@ color object = color(40);
 
 // runtime / volatile variables
 PImage currentFrame;
+PImage previousFrame;
 boolean play = true;
 boolean flip = true;
 boolean offline = true;
@@ -37,6 +38,9 @@ int sliderOptions2 = 0;
 
 float rotationSpeed = 0.001;
 
+// we want to keep tabs on updated pixels so that later on we only send out
+// the updated universes! O P T I M I T A Z A T I O N
+boolean[][] updatedPixels = new boolean[240][720];
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
@@ -73,7 +77,7 @@ void setup() {
   movie.loop();
   
   createDemos();
-  
+  previousFrame = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
 }
 
 void draw() {
@@ -85,8 +89,13 @@ void draw() {
   manifest.update();
   manifest.display();
   
+  if(currentFrame != null) {
+    previousFrame.copy(currentFrame, 0, 0, currentFrame.width, currentFrame.height, 0, 0, currentFrame.width, currentFrame.height); //previousFrame = currentFrame;
+  }
+  
   updateGUI();
   drawGUI();
+  
 }
 
 void getMovieFrame() {
@@ -99,5 +108,7 @@ void getMovieFrame() {
 
 void movieEvent(Movie m) {
   m.read();
-  if(play && state == NONE) currentFrame = movie;
+  if(play && state == NONE) {    
+    currentFrame = movie;
+  }
 }

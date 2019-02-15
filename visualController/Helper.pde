@@ -37,6 +37,9 @@ PImage transformFrame(PImage s) {
   return destination;
 }
 
+void gTransformation() {
+}
+
 void dragging() {
   // ist noch ein bisschen schräg programmiert mit dem draggen
   if(mouseX < 200) {
@@ -116,3 +119,16 @@ int gamma8[] = {
   177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
   215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255
 };
+
+boolean isSame(color c1, color c2) {
+  float r1 = c1 >> 16 & 0xFF;
+  float b1 = c1 & 0xFF;
+  float g1 = c1 >> 8 & 0xFF;
+  
+ 
+  float r2 = c2 >> 16 & 0xFF;
+  float b2 = c1 & 0xFF;
+  float g2 = c2 >> 8 & 0xFF;
+ 
+  return r1 == r2 && b1 ==b2 && g1 == g2;
+}
