@@ -21,30 +21,25 @@ Manifest manifest;
 // declare all routers
 ArrayList<Pixelrouter> routers = new ArrayList<Pixelrouter>();
 String[] routerIPs = {  // A/C + B/D router = 4 rows of LEDs
-  "2.12.4.83", "2.161.30.223", // prototyping routers
+  //"2.12.4.83", "2.161.30.223", // prototyping routers
   
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
+  "2.12.4.114", "2.12.4.111", // Zeilen: 0 – 3
+  "2.12.4.112", "2.12.4.118", // Zeilen: 4 – 7
+  "2.12.4.121", "2.12.4.122", // Zeilen: 8 – 11
+  "2.12.4.110", "2.12.4.116", // Zeilen: 12 – 15
+  "2.12.4.83",  "2.12.4.117", // Zeilen: 16 – 19
   
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
+  "2.12.4.123", "2.12.4.119", // Zeilen: 20 – 23
+  "2.12.4.115", "2.12.4.120", // Zeilen: 24 – 27
+  "2.12.4.113", "0.0.0.0"  // Zeilen: 28 - 29
   
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13", // dummy
-  "2.0.0.13", "2.0.0.13" // dummy
+  //"2.12.4.114", "2.12.4.118", // prototyping routers
   
 };
 
 // declare all rows
 ArrayList<LEDRow> rows = new ArrayList<LEDRow>();
-int totalRows = 15;
+int totalRows = 30;
 
 
 color bg = color(50);
@@ -59,6 +54,7 @@ boolean offline = true;
 boolean debug = false;
 boolean rotate = false;
 boolean redraw = true;
+boolean invert = true;
 float sliderBrightness = 255;
 int sliderOptions = 0;
 int sliderOptions2 = 0;
@@ -73,14 +69,14 @@ boolean[] updatedRows = new boolean[30]; // oder als arraylist?
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
-int MANIFEST_HEIGHT = 240;
+int MANIFEST_HEIGHT = 261;
 
 AudioIn input;
 Amplitude loudness;
 
 
 void setup() {
-  size(1000,600,P3D);
+  size(1280,800,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
   loadSettings("data/settings.json");
@@ -99,7 +95,8 @@ void setup() {
   
   
   // osx
-  movie = new Movie(this, "demos/test19_bl.mp4");
+  movie = new Movie(this, "demos/test17.mp4");
+  //movie = new Movie(this, "demos/test19_bl.mp4");
   // linux movie = new GLMovie(this, "demos/test19.mp4");
   movie.loop();
   

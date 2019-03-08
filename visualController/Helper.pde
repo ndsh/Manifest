@@ -13,6 +13,14 @@ void keyPressed() {
       redraw = !redraw;
       float r[] = {redraw?1f:0f};
       redrawCheckbox.setArrayValue(r);
+    } else if (key == 'o' || key == 'O' ) {
+      offline = !offline;
+      float r[] = {offline?1f:0f};
+      offlineCheckbox.setArrayValue(r);
+    } else if (key == 'i' || key == 'I' ) {
+      invert = !invert;
+      float r[] = {invert?1f:0f};
+      invertCheckbox.setArrayValue(r);
     }
   }
 }
@@ -25,15 +33,29 @@ PImage transformFrame(PImage s) {
   destination.background(0);
   destination.endDraw();
   s.loadPixels();
-  float factor = s.height / destination.height;
-  int c = 0;
+  float factor = float((s.height-1) / destination.height);
+  
+  factor = 8.7;
+  //factor = 8.6666666666666666666666666667;
+  //factor = 9;
+  // von zeile 0 zu zeile 1 = 9 pixel
+  // 9 * 29 (für zwischenräume) = 261
+  
+  //int c = 0;
   destination.beginDraw();
-  for(int y = 0; y<s.height; y+=factor) {
-      PImage p = s.get(0,y, 720, 1);
+  //for(float y = 0; y<s.height; y+=factor) {
+  for(float y = 0; y<30; y++) {
+    
+      int f = round(y*factor);
+      //print(f + " == ");
+      PImage p = s.get(0, f, 720, 1);
       //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
-      destination.image(p, 0, c, 720, 1);
-      c++;
+      destination.image(p, 0, y, 720, 1);
+      //println("row" + y + " = " + round(y));
+      //c++;
   }
+  //println("--");
+  //noLoop();
   destination.endDraw();
   
   return destination;
@@ -93,18 +115,21 @@ void dragging() {
 }
 
 int lightGain(int val) {
+  if(invert) val = (int)map(val, 0, 255, 255, 0);
   int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
   return calc;
 }
 
 int lightGain(float val) {
+  if(invert) val = (int)map(val, 0, 255, 255, 0);
   int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
   return calc;
 }
 
 int lightGain(int h, int s, int b) {
+  if(invert) b = (int)map(b, 0, 255, 255, 0);
   int calc = round(map(color(h,s,b), 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
   return calc;
@@ -130,6 +155,7 @@ void loadSettings(String s) {
   debug = settings.getBoolean("debug");
   rotate = settings.getBoolean("rotate");
   redraw = settings.getBoolean("redraw"); 
+  invert = settings.getBoolean("invert"); 
  
   sliderBrightness = settings.getFloat("sliderBrightness");
   

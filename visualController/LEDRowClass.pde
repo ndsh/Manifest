@@ -10,6 +10,7 @@ class LEDRow {
   int[] ports = {0,0};
   int port = 0;
   byte[][] leds = new byte[2][360];
+  boolean special = false;
   
   LEDRow(int _id, Pixelrouter r0, Pixelrouter r1, int u0) {
     id = _id;
@@ -25,6 +26,8 @@ class LEDRow {
     routers[0] = r0;
     routers[1] = r1;
     port = id % 4;
+    if(r1.getIP().equals("0.0.0.0")) special = true;
+
   }
   
   void setPixel(int led, byte val) {
@@ -110,8 +113,20 @@ class LEDRow {
   
   void send() {
     //println("sending data to pixelrouters on ports: "+ ports[0] + " + " + ports[1]);
-    routers[0].send(port, leds[0]);
-    routers[1].send(port, leds[1]);
+    if(!special) {
+      routers[0].send(port, leds[0]);
+      routers[1].send(port, leds[1]);
+    } else {
+      if(id%2 == 0) {
+        // id == 28
+        routers[0].send(0, leds[0]);
+        routers[0].send(1, leds[1]);
+      } else if(id%2 == 1) {
+        // id == 29
+        routers[0].send(2, leds[0]);
+        routers[0].send(3, leds[1]);
+      }
+    }
     // this method pushes led values in correct order to the pixel routers
   }
   

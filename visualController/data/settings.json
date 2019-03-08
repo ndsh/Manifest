@@ -1,11 +1,12 @@
 {
  "play": true,
  "flip": true,
- "offline": false,
+ "offline": true,
  "debug": false,
  "redraw": true,
  "rotate": false,
+ "invert": false,
  "sliderBrightness": 120,
  "MANIFEST_WIDTH": 720,
- "MANIFEST_HEIGHT": 238
+ "MANIFEST_HEIGHT": 261
 }
