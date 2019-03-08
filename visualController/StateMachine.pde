@@ -1,5 +1,5 @@
 // FSM
-int state = 0;
+int state = 11;
 static final int NONE = 0;
 static final int DEMO1 = 1;
 static final int DEMO2 = 2;

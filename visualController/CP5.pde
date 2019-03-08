@@ -7,6 +7,7 @@ CheckBox playCheckbox;
 CheckBox offlineCheckbox;
 CheckBox rotateCheckbox;
 CheckBox redrawCheckbox;
+CheckBox invertCheckbox;
 ScrollableList imageList;
 
 
@@ -91,16 +92,21 @@ void constructGUI() {
     .setSize(32, 8)
     .addItem("redraw", 1)
     ;
+  invertCheckbox = cp5.addCheckBox("invertCheckbox")
+    .setPosition(14, 70)
+    .setSize(32, 8)
+    .addItem("invert", 1)
+    ;
   cp5.addButton("prevDemo")
     .setValue(0)
     .setLabel("prev")
-    .setPosition(14, 70)
+    .setPosition(14, 80)
     .setSize(32, 16)
     ;
   cp5.addButton("nextDemo")
     .setValue(0)
     .setLabel("next")
-    .setPosition(50, 70)
+    .setPosition(50, 80)
     .setSize(32, 16)
     ;
     

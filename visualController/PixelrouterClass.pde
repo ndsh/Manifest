@@ -9,6 +9,10 @@ class Pixelrouter {
   Pixelrouter(String _ip) {
     ip = _ip;
   }
+  
+  String getIP() {
+    return ip;
+  }
 
   void isOnline() {
     // try-catch block zum testen ob ein pixelrouter online ist
