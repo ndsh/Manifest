@@ -97,6 +97,7 @@ void setup() {
   cp5 = new ControlP5(this);
   constructGUI();
   
+  initUDP();
   
   // osx
   movie = new Movie(this, "demos/test19_bl.mp4");
