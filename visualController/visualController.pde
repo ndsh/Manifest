@@ -60,6 +60,8 @@ float tempBrightness = 0;
 String fileName = "";
 int sliderOptions = 0;
 int sliderOptions2 = 0;
+int sliderOptions3 = 0;
+int sliderOptions4 = 0;
 
 float rotationSpeed = 0.001;
 

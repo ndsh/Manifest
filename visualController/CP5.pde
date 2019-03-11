@@ -46,6 +46,20 @@ void constructGUI() {
     .setSize(100, 8)
     .setColorValue(black)
     ;
+  cp5.addSlider("sliderOptions3")
+    .setRange(0, 128)
+    .setPosition(15, 150)
+    .setValue(128)
+    .setSize(100, 8)
+    .setColorValue(black)
+    ;
+    cp5.addSlider("sliderOptions4")
+    .setRange(0, 128)
+    .setPosition(15, 160)
+    .setValue(128)
+    .setSize(100, 8)
+    .setColorValue(black)
+    ;
     
   stateTitle = cp5.addTextlabel("label1")
     .setText("Current state: ")
@@ -111,7 +125,7 @@ void constructGUI() {
     ;
     
   imageList = cp5.addScrollableList("imageList")
-     .setPosition(14, 160)
+     .setPosition(14, 190)
      .setSize(160, 100)
      .setBarHeight(20)
      .setItemHeight(20)

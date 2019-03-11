@@ -16,6 +16,7 @@ Current version runs fine in Processing. The real-life application test is missi
 - 'Rotate' the 3D manifest object
 - 'Draw' draw/not draw the 3d object on screen
 - 'Invert' invert brightness to create a negative image
+- 'Save' when you press the "s" key on your keyboard
 - 'Sliderbrightness' controls the general brightness of the objects and all demos + LEDs
 - 'Rotationspeed' sets the speed of the object when it rotates (for show off purposes)
 - 'Slideroptions' + 'Slideroptions2' are used in various demos to control different parameters such as speed, thickness etc.
@@ -29,9 +30,10 @@ Current version runs fine in Processing. The real-life application test is missi
 - Demo 5: ("Perlin") Perlin Noise 3D. Slideroptions: Octave control from 0 – 8 / Slideroptions2: Falloff 0f – 1f
 - Demo 6: ("Flocking") Flocking demo by D. Shiffman
 - Demo 7: ("Ping pong") It's a ping pong demo?
-- Demo 11: ("Perlin2") Something like stars. Pretty underperforming.
-
-- **Rest of the Demos are not available yet**
+- Demo 8: ("H. Wellen") Horizontal spatial movement
+- Demo 9: ("V. Wellen") Vertical spatial movement
+- Demo 10: ("Aufwaerts") Vertical spatial movement, but different.
+- Demo 11: ("Statische Bilder") Loads the static images from the image folder
 
 <p align="center">
   <img src="example.png">
@@ -43,6 +45,7 @@ Current version runs fine in Processing. The real-life application test is missi
 * [Controlp5 2.2.6](https://github.com/sojamo/controlp5/releases)
 * [PeasyCam 3.0.2](http://mrfeinberg.com/peasycam/)
 * [Processing Sound 1.0.1+](https://github.com/processing/processing-sound)
+* [UDP](https://ubaa.net/shared/processing/udp/index.htm)
 
 ## Input
 * Input has to be a H.264 conform "baseline" profile encode video, so it can run both on OSX and Linux machines.

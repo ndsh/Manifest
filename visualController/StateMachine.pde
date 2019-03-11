@@ -23,7 +23,10 @@ Demo4 demo4;
 Demo5 demo5;
 Demo6 demo6;
 Demo7 demo7;
+Demo8 demo8;
+Demo9 demo9;
 Demo10 demo10;
+
 Demo11 demo11;
 void createDemos() {
   demo1 = new Demo1();
@@ -33,25 +36,19 @@ void createDemos() {
   demo5 = new Demo5();
   demo6 = new Demo6();
   demo7 = new Demo7();
+  demo8 = new Demo8();
+  demo9 = new Demo9();
   demo10 = new Demo10();
+  
   demo11 = new Demo11();
 }
-/*
-Demo2 demo2 = new Demo2();
-Demo3 demo3 = new Demo3();
-Demo4 demo4 = new Demo4();
-Demo5 demo5 = new Demo5();
-Demo7 demo7 = new Demo7();
-Demo8 demo8 = new Demo8();
-Demo9 demo9 = new Demo9();
-Demo10 demo10 = new Demo10();
-*/
+
 
 static final String[] stateNames = {
   "Video Loop", "Atmen", "Lichtstreifen",
   "Hochwandern", "Soundreaktiv", "Perlin",
-  "Flocking", "PingPong", "Wellen",
-  "Invertierte Wellen", "Perlin2", "Statische Bilder"
+  "Flocking", "PingPong", "H. Wellen",
+  "V. Wellen", "Aufwaerts", "Statische Bilder"
 };
 
 String getStateName(int state) {
@@ -122,12 +119,28 @@ void stateMachine(int state) {
       transformWrapper();
     break;
     
+    case DEMO8:
+      demo8.update();
+      demo8.display();
+      currentFrame = demo8.getDisplay(); 
+      transformWrapper();
+    break;
+    
+    case DEMO9:
+      demo9.update();
+      demo9.display();
+      currentFrame = demo9.getDisplay(); 
+      transformWrapper();
+    break;
+    
     case DEMO10:
       demo10.update();
       demo10.display();
       currentFrame = demo10.getDisplay(); 
       transformWrapper();
     break;
+    
+    
     
     case DEMO11:
       demo11.update();
@@ -643,71 +656,38 @@ class Demo7 {
   }
 }
 
-
-// Perlin2
-class Demo10 {
+// Wellen
+class Demo8 {
+  float position = 0;
   PGraphics pg;
-  ArrayList<Particle> particles_a = new ArrayList<Particle>();
-  ArrayList<Particle> particles_b = new ArrayList<Particle>();
-  ArrayList<Particle> particles_c = new ArrayList<Particle>();
   
-  int nums = 500;
-  int noiseScale = 800;
-
-  public Demo10() {
-    pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT, P3D);
-    pg.beginDraw();
+  public Demo8() {
+    pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
     pg.colorMode(HSB, 360, 100, 255);
-    pg.endDraw();
-    
-    for(int i = 0; i < nums; i++){
-      particles_a.add(new Particle(random(0, width),random(0,height)));
-      particles_b.add(new Particle(random(0, width),random(0,height)));
-      particles_c.add(new Particle(random(0, width),random(0,height)));
-    }
-    
   }
   
   void update() {
     if(play) {
-
-      
-      float alpha;
-      for(int i = 0; i<nums; i++) {
-        alpha = map(i,0,nums,0,250);
-        Particle a = particles_a.get(i);
-        Particle b = particles_b.get(i);
-        Particle c = particles_c.get(i);
-        
-        a.move();
-        a.checkEdge();
-        b.move();
-        b.checkEdge();
-        c.move();
-        c.checkEdge();
-      }
     }
   }
   
   void display() {
     if(play) {
-      float radius;
-      
       pg.beginDraw();
       pg.background(0);
-      for(int i = 0; i<nums; i++) {
-        radius = map(i,0,nums,1,2);
-        Particle a = particles_a.get(i);
-        Particle b = particles_b.get(i);
-        Particle c = particles_c.get(i);
-        
-        a.display(radius);
-        b.display(radius);
-        c.display(radius);
-      }
+      float v0 = map(sliderOptions, 0, 100, 0, 255);
+      float v1 = map(sliderOptions2, 0, 100, 0, 255);
+      float v2 = map(sliderOptions3, 0, 100, 0, 128);
+      float v3 = map(sliderOptions4, 0, 100, 0, 127);
       
-   
+      for (int x=0; x<=MANIFEST_WIDTH; x++) {
+        float p = position + x * map(v1, 0, 255, 0, PI/2);
+        float val = max(0, map(sin(p), -1, 1, -(128-v2)*10, v3*2));
+        pg.stroke(lightGain(0,0,(int)val));
+        pg.line(x, 0, x, MANIFEST_HEIGHT);
+      }
       pg.endDraw();
+      position += v0 / 255.0 / Math.PI;
     }
   }
   
@@ -716,38 +696,127 @@ class Demo10 {
   }
   
   void reset() {
+    position = 0;
+  }
+}
+
+// Invertierte Wellen
+class Demo9 {
+  float position = 0;
+  PGraphics pg;
+  
+  public Demo9() {
+    pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
+    pg.colorMode(HSB, 360, 100, 255);
   }
   
-  class Particle {
-    PVector dir = new PVector(0, 0);
-    PVector vel = new PVector(0, 0);
-    PVector pos;
-    float speed = 0.4;
+  void update() {
+    if(play) {
+    }
+  }
+  
+  void display() {
+    if(play) {
+      pg.beginDraw();
+      pg.background(0);
+      float v0 = map(sliderOptions, 0, 100, 0, 255);
+      float v1 = map(sliderOptions2, 0, 100, 0, 255);
+      float v2 = map(sliderOptions3, 0, 100, 0, 128);
+      float v3 = map(sliderOptions4, 0, 100, 0, 127);
+      
+      for (int y=0; y<=MANIFEST_HEIGHT; y++) {
+        float p = position + y * map(v1, 0, 255, 0, PI/2);
+        float val = max(0, map(sin(p), -1, 1, -(128-v2)*10, v3*2));
+        pg.stroke(lightGain(0,0,(int)val));
+        pg.line(0, y, MANIFEST_WIDTH, y);
+      }
+      pg.endDraw();
+      position += v0 / 255.0 / Math.PI;
+    }
+  }
+  
+  PImage getDisplay() {
+    return pg;
+  }
+  
+  void reset() {
+    position = 0;
+  }
+}
+
+// Aufwärts
+class Demo10 {
+  PGraphics pg;
+  long prevMillis = 0;
+  long delay = 10;
     
-    public Particle(float x, float y) {
-      pos = new PVector(x, y);
-    }
+  int Y_AXIS = 1;
+  int X_AXIS = 2;
   
-    void move () {
-      float angle = noise(pos.x/noiseScale, pos.y/noiseScale)*TWO_PI*noiseScale;
-      dir.x = cos(angle);
-      dir.y = sin(angle);
-      vel = dir.copy();
-      vel.mult(speed);
-      pos.add(vel);
-    }
+  color black = color(0, 0, 0);
+  color white = color(0, 0, 255);
+  color gray = color(0, 0, 125);
   
-    void checkEdge(){
-      if(pos.x > width || pos.x < 0 || pos.y > height || pos.y < 0){
-        pos.x = random(50, width);
-        pos.y = random(50, height);
+  int position = 0;
+  
+  boolean reset = false;
+  
+  
+  public Demo10() {
+    pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
+    pg.beginDraw();
+    pg.colorMode(HSB, 360, 100, 255);
+    pg.endDraw();
+  }
+  
+  void update() {
+    if(play) {
+        if(millis() - prevMillis < sliderOptions) return;
+        prevMillis = millis();
+        position-=sliderOptions2;
+        position%=MANIFEST_HEIGHT;
+      }
+  }
+  
+  void display() {
+    if(play) {
+      pg.beginDraw();
+      pg.background(0);
+      setGradient(0, position, MANIFEST_WIDTH, MANIFEST_HEIGHT, black, white, Y_AXIS);
+      //setGradient(0, position+261, MANIFEST_WIDTH, MANIFEST_HEIGHT*2, white, black, Y_AXIS);
+      //setGradient(0, MANIFEST_HEIGHT, MANIFEST_WIDTH, position, gray, white, X_AXIS);
+      pg.endDraw();
+    }
+  }
+  
+  void setGradient(int x, int y, float w, float h, color c1, color c2, int axis ) {
+    noFill();
+  
+    if (axis == Y_AXIS) {  // Top to bottom gradient
+      for (int i = y; i <= y+h; i++) {
+        float inter = map(i, y, y+h, 0, 1);
+        color c = lerpColor(c1, c2, inter);
+        pg.stroke(c);
+        pg.line(x, i, x+w, i);
+      }
+    }  
+    else if (axis == X_AXIS) {  // Left to right gradient
+      for (int i = x; i <= x+w; i++) {
+        float inter = map(i, x, x+w, 0, 1);
+        color c = lerpColor(c1, c2, inter);
+        pg.stroke(c);
+        pg.line(i, y, i, y+h);
       }
     }
+  }
+
   
-    void display(float r){
-      pg.fill(0,0,255);
-      pg.ellipse(pos.x, pos.y, r, r);
-    }
+  PImage getDisplay() {
+    return pg;
+  }
+  
+  void reset() {
+
   }
 }
 
@@ -791,7 +860,7 @@ class Demo11 {
         l.add(f);
       }
       
-      cp5.get(ScrollableList.class, "imageList").addItems(l).setPosition(14, 160);
+      cp5.get(ScrollableList.class, "imageList").addItems(l).setPosition(14, 190);
       getImage();
       
     }
