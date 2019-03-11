@@ -832,12 +832,26 @@ class Demo11 {
   StringList files = new StringList();
   boolean foundFiles = false;
   int pointer = 0;
+  boolean external = false;
   
   public Demo11() {
     pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
     pg.beginDraw();
     pg.colorMode(HSB, 360, 100, 255);
     pg.endDraw();
+    
+    // import images
+    File tempFile = new File(dataPath(externalPath+"img")); 
+    if (tempFile.exists()) {
+      folder = dataFile(externalPath+"img");
+      external = true;
+     //filePath = externalPath+"content/"+fileName;
+     println("[success] found image folder on external");
+    } else{
+      folder = dataFile(path);
+//     filePath = "demos/"+fileName;
+     println("[fail] couldn't find image folder on external");
+    }
 
     initList();
   }
@@ -848,9 +862,13 @@ class Demo11 {
     for (int i = 0; i < pics.length; filenames[i] = pics[i++].getPath());
     if(filenames.length > 0) {
       foundFiles = true;
+      
       for(int i = 0; i< filenames.length; i++) {
-        String[] absolutePath = split(filenames[i], '/');
-        files.append(absolutePath[absolutePath.length-1]);
+        String[] splitter = split(filenames[i], '.');
+        if(splitter[1].equals("jpg") || splitter[1].equals("JPG") || splitter[1].equals("png") || splitter[1].equals("PNG")) { 
+          String[] absolutePath = split(filenames[i], '/');
+          files.append(absolutePath[absolutePath.length-1]);
+        }
       }
     }
     if(foundFiles) {
@@ -896,7 +914,10 @@ class Demo11 {
   
   void getImage() {
     println("loading file: "+ files.get(pointer));
-    p = loadImage(sketchPath("") +"data/"+path+"/"+files.get(pointer));
+    if(!external) p = loadImage(sketchPath("") +"data/"+path+"/"+files.get(pointer));
+    else p = loadImage(externalPath+"img/"+files.get(pointer));
+    
+    
   }
  
   
