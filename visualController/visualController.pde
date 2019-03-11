@@ -56,10 +56,17 @@ boolean rotate = false;
 boolean redraw = true;
 boolean invert = true;
 float sliderBrightness = 255;
+float tempBrightness = 0;
+String fileName = "";
 int sliderOptions = 0;
 int sliderOptions2 = 0;
 
 float rotationSpeed = 0.001;
+
+// put correct path to extern settings file here. it should be auto-mounted. if not found there is a fall back
+// on mac
+//String externalPath = "/Volumes/INHALTE/";
+String externalPath = "/mnt/INHALTE/";
 
 // we want to keep tabs on updated pixels so that later on we only send out
 // the updated universes! O P T I M I T A Z A T I O N
@@ -79,7 +86,19 @@ void setup() {
   size(1280,800,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
-  loadSettings("data/settings.json");
+  
+  String filePath = "";
+  File tempFile = new File(dataPath(externalPath+"settings.json")); 
+  if (tempFile.exists()) {
+   loadSettings(externalPath+"settings.json");
+   filePath = externalPath+"content/"+fileName;
+   println("[success] loaded settings.json from external");
+  } else{
+   loadSettings("data/settings.json");
+   filePath = "demos/"+fileName;
+   println("[fail] loaded settings.json from internal");
+  }
+  
   manifest = new Manifest(object);
 
   camera = new PeasyCam(this, 100);
@@ -96,7 +115,7 @@ void setup() {
   initUDP();
   
   // osx
-  movie = new Movie(this, "demos/test17.mp4");
+  movie = new Movie(this, filePath);
   //movie = new Movie(this, "demos/test19_bl.mp4");
   // linux movie = new GLMovie(this, "demos/test19.mp4");
   movie.loop();

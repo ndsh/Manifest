@@ -21,7 +21,11 @@ void keyPressed() {
       invert = !invert;
       float r[] = {invert?1f:0f};
       invertCheckbox.setArrayValue(r);
+    } else if (key == 's' || key == 'S' ) {
+      saveSettings();
     }
+    
+    
   }
 }
 
@@ -158,11 +162,39 @@ void loadSettings(String s) {
   invert = settings.getBoolean("invert"); 
  
   sliderBrightness = settings.getFloat("sliderBrightness");
+  tempBrightness = sliderBrightness;
   
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
   MANIFEST_HEIGHT = settings.getInt("MANIFEST_HEIGHT");
-
+  
+  fileName = settings.getString("fileName");
 }
+// serialize variables and save them to settings.json on path
+void saveSettings() {
+  JSONObject json;
+  json = new JSONObject();
+
+  json.setBoolean("play", play);
+  json.setBoolean("flip", flip);
+  json.setBoolean("offline", offline);
+  json.setBoolean("debug", debug);
+  json.setBoolean("rotate", rotate);
+  json.setBoolean("redraw", redraw);
+  json.setBoolean("invert", invert);
+  
+  json.setFloat("sliderBrightness", sliderBrightness);
+  
+  json.setInt("MANIFEST_WIDTH", MANIFEST_WIDTH);
+  json.setInt("MANIFEST_HEIGHT", MANIFEST_HEIGHT);
+  
+  json.setString("fileName", fileName);
+  
+  saveJSONObject(json, externalPath+"settings.json" );
+  // folgende zeile später auskommentieren weil system dann nur noch read-only ist. eventuell wirft das fehler
+  saveJSONObject(json, "data/settings.json");
+  println("saved current settings to file");
+}
+
 int getLogGamma(int in) {
   return gamma8[in]; 
 }

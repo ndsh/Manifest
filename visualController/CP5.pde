@@ -133,7 +133,8 @@ void constructGUI() {
   rotateCheckbox.setArrayValue((rotate?y:n));
   redrawCheckbox.setArrayValue((redraw?y:n));
   
-  cp5.getController("sliderBrightness").setValue(sliderBrightness);
+  cp5.getController("sliderBrightness").setValue(tempBrightness);
+  
 
 }
 

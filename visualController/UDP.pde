@@ -10,7 +10,7 @@ void initUDP() {
 
   // create a new datagram connection on port 6000
   // and wait for incomming message
-  udp = new UDP( this, 6000 );
+  udp = new UDP( this, 6001 );
   //udp.log( true );     // <-- printout the connection activity
   udp.listen( true );
 }
