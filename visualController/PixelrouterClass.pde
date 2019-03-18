@@ -2,12 +2,15 @@ class Pixelrouter {
   // the pixelrouter only sends out signals via artnet
   String ip;
   boolean online = true; // später überprüfen ob wirklich online
+  ArtNetClient artnet;
 
   Pixelrouter() {
   }
 
   Pixelrouter(String _ip) {
     ip = _ip;
+    artnet = new ArtNetClient(null);
+    artnet.start();
   }
   
   String getIP() {

@@ -14,17 +14,19 @@ import processing.video.*;
 Movie movie;
 
 PeasyCam camera;
-ArtNetClient artnet;
 ControlP5 cp5; 
 
 Manifest manifest;
 // declare all routers
 ArrayList<Pixelrouter> routers = new ArrayList<Pixelrouter>();
 String[] routerIPs = {  // A/C + B/D router = 4 rows of LEDs
-  //"2.12.4.83", "2.161.30.223", // prototyping routers
-  
-  "2.12.4.114", "2.12.4.111", // Zeilen: 0 – 3
-  "2.12.4.112", "2.12.4.118", // Zeilen: 4 – 7
+//  "2.12.4.83", "2.161.30.223", // prototyping routers
+
+  "2.12.4.124", "2.161.30.223", // prototyping routers + leihrouter
+  "2.12.4.155", "2.12.4.156", // prototyping routers + leihrouter
+
+//  "2.12.4.114", "2.12.4.111", // Zeilen: 0 – 3
+//  "2.12.4.112", "2.12.4.118", // Zeilen: 4 – 7
   "2.12.4.121", "2.12.4.122", // Zeilen: 8 – 11
   "2.12.4.110", "2.12.4.116", // Zeilen: 12 – 15
   "2.12.4.83",  "2.12.4.117", // Zeilen: 16 – 19
@@ -104,12 +106,7 @@ void setup() {
   manifest = new Manifest(object);
 
   camera = new PeasyCam(this, 100);
-  setupCamera();
-
-  // create artnet client without buffer (no receving needed)
-  artnet = new ArtNetClient(null);
-  artnet.start();
-  
+  setupCamera();  
   
   cp5 = new ControlP5(this);
   constructGUI();

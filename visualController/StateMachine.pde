@@ -26,8 +26,8 @@ Demo7 demo7;
 Demo8 demo8;
 Demo9 demo9;
 Demo10 demo10;
-
 Demo11 demo11;
+
 void createDemos() {
   demo1 = new Demo1();
   demo2 = new Demo2();
@@ -39,7 +39,6 @@ void createDemos() {
   demo8 = new Demo8();
   demo9 = new Demo9();
   demo10 = new Demo10();
-  
   demo11 = new Demo11();
 }
 
