@@ -10,7 +10,7 @@ void initUDP() {
 
   // create a new datagram connection on port 6000
   // and wait for incomming message
-  udp = new UDP( this, 6001 );
+  udp = new UDP( this, 6100 );
   //udp.log( true );     // <-- printout the connection activity
   udp.listen( true );
 }
@@ -45,9 +45,11 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
     prevDemo(1);
   } else if (message.contains("Manifest,Av2")) {
     nextDemo(1);
+  } else if (message.contains("Manifest,Menu")) {
+    saveSettings();
   } 
     
   
   // print the result
-  //println( "receive: \""+message+"\" from "+ip+" on port "+port );
+  println( "receive: \""+message+"\" from "+ip+" on port "+port );
 }

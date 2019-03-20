@@ -1,13 +1,13 @@
 {
- "play": true,
- "flip": true,
- "offline": true,
- "debug": false,
- "redraw": true,
- "rotate": false,
- "invert": false,
- "sliderBrightness": 120,
- "MANIFEST_WIDTH": 720,
- "MANIFEST_HEIGHT": 261,
- "fileName": "test16.mp4"
+  "play": true,
+  "offline": false,
+  "rotate": false,
+  "redraw": true,
+  "MANIFEST_HEIGHT": 261,
+  "fileName": "test19_bl.mp4",
+  "debug": false,
+  "invert": false,
+  "MANIFEST_WIDTH": 720,
+  "flip": true,
+  "sliderBrightness": 120
 }
