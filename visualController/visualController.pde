@@ -70,7 +70,7 @@ float rotationSpeed = 0.001;
 // put correct path to extern settings file here. it should be auto-mounted. if not found there is a fall back
 // on mac
 //String externalPath = "/Volumes/INHALTE/";
-String externalPath = "/mnt/INHALTE/";
+String externalPath = "/media/thegreeneyl/INHALTE/";
 
 // we want to keep tabs on updated pixels so that later on we only send out
 // the updated universes! O P T I M I T A Z A T I O N
