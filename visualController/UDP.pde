@@ -33,7 +33,10 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   data = subset(data, 0, data.length-2);
   String message = new String( data );
   
-  if (message.contains("Manifest,Left")) {
+  if (message.contains("Manifest,On/Off")) {
+    sliderBrightness = 0;
+    cp5.getController("sliderBrightness").setValue(sliderBrightness);
+  } else if (message.contains("Manifest,Left")) {
     sliderBrightness = sliderBrightness -1 < 0 ? 0 : sliderBrightness - 1;
     println("sliderBrightness: " + sliderBrightness);
     cp5.getController("sliderBrightness").setValue(sliderBrightness);
