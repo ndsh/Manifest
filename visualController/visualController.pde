@@ -57,6 +57,7 @@ boolean debug = false;
 boolean rotate = false;
 boolean redraw = true;
 boolean invert = true;
+boolean externalSettings = false;
 float sliderBrightness = 255;
 float tempBrightness = 0;
 String fileName = "";
@@ -85,17 +86,22 @@ int MANIFEST_HEIGHT = 261;
 AudioIn input;
 Amplitude loudness;
 
+final String OS = platformNames[platform];
 
 void setup() {
   size(1280,800,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
   
+  
+  
+  if(OS.equals("macosx")) externalPath = "/Volumes/INHALTE/";
+  else externalPath = "/media/thegreeneyl/INHALTE/";  
   String filePath = "";
-  File tempFile = new File(dataPath(externalPath+"settings.json")); 
-  if (tempFile.exists()) {
+  if(fileExists("settings.json", externalPath, false)) {
    loadSettings(externalPath+"settings.json");
    filePath = externalPath+"content/"+fileName;
+   externalSettings = true;
    println("[success] loaded settings.json from external");
   } else{
    loadSettings("data/settings.json");
@@ -112,8 +118,15 @@ void setup() {
   constructGUI();
   
   initUDP();
-  
+
   // osx
+  if(!externalSettings && !fileExists(fileName, "demos/", true)) {
+    println("[error] the following file from internal settings couldn't be loaded from /data folder: " + fileName);
+    println("[warning] the sketch will close now");
+  } else if(externalSettings && !fileExists(fileName, externalPath, false)) {
+    println("[error] the following file from external settings couldn't be loaded from external media: " + fileName);
+    println("[warning] the sketch will close now");
+  }
   movie = new Movie(this, filePath);
   //movie = new Movie(this, "demos/test19_bl.mp4");
   // linux movie = new GLMovie(this, "demos/test19.mp4");

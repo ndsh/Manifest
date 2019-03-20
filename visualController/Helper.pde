@@ -3,6 +3,9 @@ int mousePressedLocation = 0;
 void keyPressed() {
   if (key == CODED) {
     if (keyCode == LEFT) {
+      prevDemo(1);
+    } else if (keyCode == RIGHT) {
+      nextDemo(1);
     }
   } else {
     if (key == 'r' || key == 'R' ) {
@@ -159,13 +162,14 @@ void loadSettings(String s) {
   debug = settings.getBoolean("debug");
   rotate = settings.getBoolean("rotate");
   redraw = settings.getBoolean("redraw"); 
-  invert = settings.getBoolean("invert"); 
+  invert = settings.getBoolean("invert");
  
   sliderBrightness = settings.getFloat("sliderBrightness");
   tempBrightness = sliderBrightness;
   
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
   MANIFEST_HEIGHT = settings.getInt("MANIFEST_HEIGHT");
+  state = settings.getInt("state");
   
   fileName = settings.getString("fileName");
 }
@@ -186,10 +190,12 @@ void saveSettings() {
   
   json.setInt("MANIFEST_WIDTH", MANIFEST_WIDTH);
   json.setInt("MANIFEST_HEIGHT", MANIFEST_HEIGHT);
+  //json.setInt("state", state);
   
   json.setString("fileName", fileName);
+  json.setString("lastModification", printTime());
   
-  saveJSONObject(json, externalPath+"settings.json" );
+  if(fileExists("settings.json", externalPath, false)) saveJSONObject(json, externalPath+"settings.json" );
   // folgende zeile später auskommentieren weil system dann nur noch read-only ist. eventuell wirft das fehler
   saveJSONObject(json, "data/settings.json");
   println("saved current settings to file");
@@ -244,4 +250,16 @@ void movieEvent(Movie m) {
   if(play && state == NONE) {    
     currentFrame = movie;
   }
+}
+
+String printTime() {
+  return day() +"."+ month() +"."+ year() +", "+ hour() +":"+ minute() +":"+ second();
+}
+
+boolean fileExists(String filename, String externalPath, boolean internal) {
+  File tempFile;
+  if(!internal) tempFile = new File(dataPath(externalPath+filename));
+  else tempFile = new File(dataPath(externalPath+filename));
+  if (tempFile.exists()) return true;
+  else return false;
 }

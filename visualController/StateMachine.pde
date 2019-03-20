@@ -13,6 +13,8 @@ static final int DEMO9 = 9;
 static final int DEMO10 = 10;
 static final int DEMO11 = 11;
 
+static final int INTRO = 99;
+
 static final int MAX_STATES = 12;
 
 // Demo Objects
@@ -304,7 +306,7 @@ class Demo4 {
   
   void update() {
     if(play) {
-      float inputLevel = map(mouseY, 0, height, 1.0, 0.0);
+      float inputLevel = map(mouseY, 0, pg.height, 1.0, 0.0);
       input.amp(inputLevel);
     
       // loudness.analyze() return a value between 0 and 1. To adjust
@@ -512,16 +514,16 @@ class Demo6 {
       pg.noStroke();
       pg.pushMatrix();
       pg.translate(position.x, position.y);
-      pg.ellipse(0,0,6,6);
+      pg.ellipse(0,0,5,10);
       pg.popMatrix();
       pg.endDraw();
     }
   
     void borders() {
-      if (position.x < -r) position.x = width+r;
-      if (position.y < -r) position.y = height+r;
-      if (position.x > width+r) position.x = -r;
-      if (position.y > height+r) position.y = -r;
+      if (position.x < -r) position.x = pg.width+r;
+      if (position.y < -r) position.y = pg.height+r;
+      if (position.x > pg.width+r) position.x = -r;
+      if (position.y > pg.height+r) position.y = -r;
     }
   
     PVector separate (ArrayList<Boid> boids) {

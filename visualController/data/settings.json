@@ -1,13 +1,15 @@
 {
   "play": true,
-  "offline": false,
   "rotate": false,
-  "redraw": true,
-  "MANIFEST_HEIGHT": 261,
   "fileName": "test19_bl.mp4",
   "debug": false,
   "invert": false,
+  "sliderBrightness": 122,
+  "offline": false,
+  "redraw": true,
+  "MANIFEST_HEIGHT": 261,
   "MANIFEST_WIDTH": 720,
-  "flip": true,
-  "sliderBrightness": 122
+  "lastModification": "20.3.2019, 16:40:55",
+  "state": 12,
+  "flip": true
 }
