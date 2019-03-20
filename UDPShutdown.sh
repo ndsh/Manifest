@@ -5,6 +5,6 @@ do
         if [ $match -eq 1 ]; then
             shutdown now
         else
-        	echo -n "$line " | nc -4u -w1  localhost 6100
+        	echo -n "$line " | nc -4u -w0  localhost 6100
         fi
 done
