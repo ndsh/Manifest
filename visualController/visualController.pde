@@ -12,6 +12,7 @@ import java.util.*;
 // osx video
 import processing.video.*;
 Movie movie;
+Movie introMov;
 
 PeasyCam camera;
 ControlP5 cp5; 
@@ -49,7 +50,8 @@ color object = color(40);
 
 // runtime / volatile variables
 PImage currentFrame;
-PImage previousFrame;
+PImage nextFrame;
+PImage marke;
 boolean play = true;
 boolean flip = true;
 boolean offline = true;
@@ -60,11 +62,19 @@ boolean invert = true;
 boolean externalSettings = false;
 float sliderBrightness = 255;
 float tempBrightness = 0;
+int state = 11;
+int tempState = 0;
 String fileName = "";
 int sliderOptions = 0;
 int sliderOptions2 = 0;
 int sliderOptions3 = 0;
 int sliderOptions4 = 0;
+
+int originX = 0;
+
+boolean introFinished = false;
+long introDuration = 0;
+long introPrevMillis = 0;
 
 float rotationSpeed = 0.001;
 
@@ -87,25 +97,24 @@ AudioIn input;
 Amplitude loudness;
 
 final String OS = platformNames[platform];
+String mainMovieFilePath = "";
 
 void setup() {
-  size(1280,800,P3D);
+  size(1080,600,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
   
-  
-  
   if(OS.equals("macosx")) externalPath = "/Volumes/INHALTE/";
-  else externalPath = "/media/thegreeneyl/INHALTE/";  
-  String filePath = "";
+  else externalPath = "/media/thegreeneyl/INHALTE/";
+  
   if(fileExists("settings.json", externalPath, false)) {
    loadSettings(externalPath+"settings.json");
-   filePath = externalPath+"content/"+fileName;
+   mainMovieFilePath = externalPath+"content/"+fileName;
    externalSettings = true;
    println("[success] loaded settings.json from external");
   } else{
    loadSettings("data/settings.json");
-   filePath = "demos/"+fileName;
+   mainMovieFilePath = "demos/"+fileName;
    println("[fail] loaded settings.json from internal");
   }
   
@@ -116,10 +125,10 @@ void setup() {
   
   cp5 = new ControlP5(this);
   constructGUI();
+  state = tempState;
   
   initUDP();
 
-  // osx
   if(!externalSettings && !fileExists(fileName, "demos/", true)) {
     println("[error] the following file from internal settings couldn't be loaded from /data folder: " + fileName);
     println("[warning] the sketch will close now");
@@ -127,13 +136,15 @@ void setup() {
     println("[error] the following file from external settings couldn't be loaded from external media: " + fileName);
     println("[warning] the sketch will close now");
   }
-  movie = new Movie(this, filePath);
-  //movie = new Movie(this, "demos/test19_bl.mp4");
-  // linux movie = new GLMovie(this, "demos/test19.mp4");
+  int rIntro = (int)random(0, 5);
+  introMov = new Movie(this, "intros/"+ rIntro +".mp4");
+  introMov.loop();
+  
+  movie = new Movie(this, mainMovieFilePath);
   movie.loop();
   
   createDemos();
-  previousFrame = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
+  nextFrame = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
   
   // let's add some routers and led rows
   // - - - - - - - - - - - - - - - - - - - - - -
@@ -152,21 +163,33 @@ void setup() {
     }
   }
   // - - - - - - - - - - - - - - - - - - - - - -
+  marke = loadImage("tge.png");
+  introPrevMillis = millis();
 }
 
 void draw() {
   background(bg);
-  dragging();   
-  stateMachine(state);
+  dragging();
+  if(!introFinished) {
+    state = 0;
+    if(millis() - introPrevMillis < introDuration) {
+      if(play && nextFrame != null) {
+        setCurrentFrame(nextFrame);
+        transformWrapper();
+      }
+    } else {
+      introMov.noLoop();
+      introFinished = true;       
+    }
+  } else {
+    stateMachine(state);
+  }
   send();
   if(rotate) camera.rotateY(rotationSpeed);
-  //getMovieFrame();
+  
   manifest.update();
   manifest.display();
-  
-  if(currentFrame != null) {
-    previousFrame.copy(currentFrame, 0, 0, currentFrame.width, currentFrame.height, 0, 0, currentFrame.width, currentFrame.height); //previousFrame = currentFrame;
-  }
+ 
   
   updateGUI();
   drawGUI();

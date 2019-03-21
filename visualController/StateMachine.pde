@@ -1,5 +1,4 @@
 // FSM
-int state = 11;
 static final int NONE = 0;
 static final int DEMO1 = 1;
 static final int DEMO2 = 2;
@@ -18,6 +17,7 @@ static final int INTRO = 99;
 static final int MAX_STATES = 12;
 
 // Demo Objects
+Intro intro;
 Demo1 demo1;
 Demo2 demo2;
 Demo3 demo3;
@@ -31,6 +31,7 @@ Demo10 demo10;
 Demo11 demo11;
 
 void createDemos() {
+  intro = new Intro();
   demo1 = new Demo1();
   demo2 = new Demo2();
   demo3 = new Demo3();
@@ -61,9 +62,10 @@ void stateMachine(int state) {
    switch(state) {
     case NONE:
       // feed the manifest with data
-      if(play && currentFrame != null) {
+      if(play && nextFrame != null) {
         //manifest.setFrame(transformFrame(currentFrame));
         //feedFrame(transformFrame(currentFrame));
+        setCurrentFrame(nextFrame);
         transformWrapper();
         //send();
       }
@@ -72,7 +74,7 @@ void stateMachine(int state) {
     case DEMO1:
       demo1.update();
       demo1.display();
-      currentFrame = demo1.getDisplay(); 
+      setCurrentFrame(demo1.getDisplay()); 
       transformWrapper();
       //send();
     break;
@@ -80,7 +82,7 @@ void stateMachine(int state) {
     case DEMO2:
       demo2.update();
       demo2.display();
-      currentFrame = demo2.getDisplay(); 
+      setCurrentFrame(demo2.getDisplay()); 
       transformWrapper();
       //send();
     break;
@@ -88,56 +90,56 @@ void stateMachine(int state) {
     case DEMO3:
       demo3.update();
       demo3.display();
-      currentFrame = demo3.getDisplay(); 
+      setCurrentFrame(demo3.getDisplay()); 
       transformWrapper();
     break;
     
     case DEMO4:
       demo4.update();
       demo4.display();
-      currentFrame = demo4.getDisplay(); 
+      setCurrentFrame(demo4.getDisplay()); 
       transformWrapper();
     break;
    
     case DEMO5:
       demo5.update();
       //demo5.display();
-      currentFrame = demo5.getDisplay(); 
+      setCurrentFrame(demo5.getDisplay()); 
       transformWrapper();
     break;
     
     case DEMO6:
       demo6.update();
       //demo5.display();
-      currentFrame = demo6.getDisplay(); 
+      setCurrentFrame(demo6.getDisplay()); 
       transformWrapper();
     break;
     
     case DEMO7:
       demo7.update();
       demo7.display();
-      currentFrame = demo7.getDisplay(); 
+      setCurrentFrame(demo7.getDisplay()); 
       transformWrapper();
     break;
     
     case DEMO8:
       demo8.update();
       demo8.display();
-      currentFrame = demo8.getDisplay(); 
+      setCurrentFrame(demo8.getDisplay()); 
       transformWrapper();
     break;
     
     case DEMO9:
       demo9.update();
       demo9.display();
-      currentFrame = demo9.getDisplay(); 
+      setCurrentFrame(demo9.getDisplay()); 
       transformWrapper();
     break;
     
     case DEMO10:
       demo10.update();
       demo10.display();
-      currentFrame = demo10.getDisplay(); 
+      setCurrentFrame(demo10.getDisplay()); 
       transformWrapper();
     break;
     
@@ -146,11 +148,91 @@ void stateMachine(int state) {
     case DEMO11:
       demo11.update();
       demo11.display();
-      currentFrame = demo11.getDisplay(); 
+      setCurrentFrame(demo11.getDisplay()); 
       transformWrapper();
     break;
     
     }
+}
+
+class Intro {
+  PGraphics pg;
+  float growth = 15;
+  float radius = 0;
+  boolean bordered = false;
+  boolean black = false;
+  
+  int flag = 0;
+  
+  public Intro() {
+    pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
+    
+    pg.beginDraw();
+    pg.colorMode(HSB, 360, 100, 255);
+    pg.noStroke();
+    pg.rectMode(CENTER);
+    pg.ellipseMode(CENTER);
+    pg.endDraw();
+    
+  }
+ 
+  void update() {
+    if(play && currentFrame != null) {
+      //manifest.setFrame(transformFrame(currentFrame));
+      //feedFrame(transformFrame(currentFrame));
+      transformWrapper();
+      //send();
+    }
+  }
+  
+  void display() {
+
+  }
+  void displayY() {
+    if(play) {
+      pg.beginDraw();
+      pg.noStroke();
+      if(bordered) {
+        bordered = false;
+        radius = 0;
+        black = !black;
+        flag++;
+      }
+      if(black) pg.fill(0);
+      else pg.fill(255);
+      if(flag == 0) {
+        pg.ellipse(160,130, radius, radius);
+        pg.ellipse(520,130, radius, radius);
+      } else if(flag == 1) {
+        pg.rect(160,130, radius, radius);
+        pg.rect(520,130, radius, radius);
+      } else if(flag == 2) {
+        
+        pg.pushMatrix();
+        pg.translate(160, 130);
+        pg.rotate(radians(180));
+        pg.scale(radius/60);
+        pg.triangle(-30, 30, 0, -30, 30, 30); 
+        pg.popMatrix();
+        
+        pg.pushMatrix();
+        pg.translate(520, 130);
+        pg.rotate(radians(180));
+        pg.scale(radius/60);
+        pg.triangle(-30, 30, 0, -30, 30, 30); 
+        pg.popMatrix();
+      } else if(flag == 3) {
+        pg.background(0,0,0,240);
+      }
+      pg.endDraw();
+      radius += growth;
+      if(radius > pg.width) bordered = true;
+    }
+  }
+  
+  PImage getDisplay() {
+    return pg;
+  }
 }
 
 // Breathe

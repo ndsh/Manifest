@@ -52,9 +52,7 @@ PImage transformFrame(PImage s) {
   destination.beginDraw();
   //for(float y = 0; y<s.height; y+=factor) {
   for(float y = 0; y<30; y++) {
-    
       int f = round(y*factor);
-      //print(f + " == ");
       PImage p = s.get(0, f, 720, 1);
       //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
       destination.image(p, 0, y, 720, 1);
@@ -68,41 +66,25 @@ PImage transformFrame(PImage s) {
   return destination;
 }
 
+void setCurrentFrame(PImage p) {
+  PGraphics pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
+  if(originX > 0) {
+    pg.beginDraw();
+    pg.colorMode(HSB, 360, 100, 255);
+    //pg.image(p, originX, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
+    PImage p1 = p.get(originX, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
+    PImage p2 = p.get(0, 0, originX-1, MANIFEST_HEIGHT);
+    //pg.image(p1, MANIFEST_WIDTH-originX, 0, MANIFEST_WIDTH, MANIFEST_HEIGHT);
+    pg.image(p1, 0, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
+    pg.image(p2, originX-1, 0, originX, MANIFEST_HEIGHT);
+    pg.endDraw();
+    currentFrame = pg;
+  } else currentFrame = p;
+}
+
 void transformWrapper() {
-  boolean useDifference = false;
   PImage transformed = transformFrame(currentFrame);
   manifest.setFrame(transformed);
-  if(useDifference) {
-    PImage prev = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB); // falls differenz nicht gebraucht wird
-
-    // routine um differenz pixel ausfindig zu machen
-    if(previousFrame != null) {
-      prev = transformFrame(previousFrame);
-      prev.loadPixels();
-      transformed.loadPixels();
-      updatedPixels = new boolean[30][720];
-      updatedRows = new boolean[30];
-      
-      int count = 0;
-      changedPixels = false;
-      for(int y = 0; y<transformed.height; y++) {
-        for(int x = 0; x<transformed.width; x++) {
-          color c1 = transformed.pixels[y*transformed.width+x];
-          color c2 = prev.pixels[y*transformed.width+x];
-          if (!isSame(c1, c2)) {
-            if(!changedPixels) changedPixels = true;
-            updatedPixels[y][x] = true;
-            updatedRows[y] = true;
-            count++;
-          }
-        }
-      }
-      //println("hallo" + updatedRows.size() + " : "+ updatedRows);
-      //println("---");
-      //println(count); // how many pixels have changed inbetween the previous and current framesx
-    }
-    
-  }  
   feedFrame(transformed);
 }
 
@@ -167,9 +149,13 @@ void loadSettings(String s) {
   sliderBrightness = settings.getFloat("sliderBrightness");
   tempBrightness = sliderBrightness;
   
+  introDuration = settings.getLong("introDuration")*1000;
+  
+  originX = settings.getInt("originX");
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
   MANIFEST_HEIGHT = settings.getInt("MANIFEST_HEIGHT");
   state = settings.getInt("state");
+  tempState = state;
   
   fileName = settings.getString("fileName");
 }
@@ -190,7 +176,10 @@ void saveSettings() {
   
   json.setInt("MANIFEST_WIDTH", MANIFEST_WIDTH);
   json.setInt("MANIFEST_HEIGHT", MANIFEST_HEIGHT);
-  //json.setInt("state", state);
+  json.setInt("state", state);
+  json.setInt("originX", originX);
+  
+  json.setLong("introDuration", introDuration/1000);
   
   json.setString("fileName", fileName);
   json.setString("lastModification", printTime());
@@ -237,18 +226,11 @@ boolean isSame(color c1, color c2) {
 }
 
 
-void getMovieFrame() {
-  if(movie.available()) {
-    movie.read();
-    if(play && state == NONE) currentFrame = movie;
-  }
-}
-
-
 void movieEvent(Movie m) {
   m.read();
-  if(play && state == NONE) {    
-    currentFrame = movie;
+  if(play && (state == NONE || state == INTRO)) {    
+    if(introFinished) nextFrame = movie; // setCurrentFrame(m);
+    else nextFrame = introMov; //setCurrentFrame(m);
   }
 }
 

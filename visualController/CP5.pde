@@ -164,6 +164,8 @@ void drawGUI() {
   noStroke();
   rect(0, 0, 200, height);
   popStyle();
+  
+  image(marke, width-120, height-40);
 
   // 2d texture preview
   if (currentFrame!= null) {

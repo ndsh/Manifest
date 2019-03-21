@@ -44,16 +44,12 @@ class LEDRow {
     int rm  = 0; // remapped value
     int u = 0;
     if(led >= 0 && led < 280) {
-      //print(" c1 --> ");
       rm = round(map(led, 0, 279, 279, 0));
       u = 1;
     } else if(led >= 280 && led < 640) {
-      //print(" c2 --> ");
       rm = round(map(led, 280, 639, 359, 0));
-      //print(" == float: " + round(map(led, 280, 639, 359, 0)) + " == ");
       u = 0;
     } else if(led >= 640 && led < 720) {
-      //print(" c3 --> ");
       rm = round(map(led, 640, 719, 359, 280));
       u = 1;
     }
@@ -67,19 +63,15 @@ class LEDRow {
     int u = 0;
     //print("input: "+ led + " --> ");
     if(led >= 0 && led < 40) {
-      //print(" c1 --> ");
       rm = round(map(led, 0, 39, 320, 359));
       u = 1;
     } else if(led >= 40 && led < 400) {
-      //print(" c2 --> ");
       rm = round(map(led, 40, 399, 0, 359));
       u = 0;
     } else if(led >= 400 && led < 720) {
-      //print(" c3 --> ");
       rm = round(map(led, 400, 719, 0, 319));
       u = 1;
-    }
-    
+    }    
     //println("mapped: ["+ u + "][" + rm +"]="+(byte)val);
     leds[u][rm] = (byte)val;
   }
