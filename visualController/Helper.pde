@@ -149,7 +149,7 @@ void loadSettings(String s) {
   sliderBrightness = settings.getFloat("sliderBrightness");
   tempBrightness = sliderBrightness;
   
-  introDuration = settings.getLong("introDuration")*1000;
+  introDuration = settings.getInt("introDuration")*1000;
   
   originX = settings.getInt("originX");
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
@@ -179,7 +179,7 @@ void saveSettings() {
   json.setInt("state", state);
   json.setInt("originX", originX);
   
-  json.setLong("introDuration", introDuration/1000);
+  json.setInt("introDuration", (int)introDuration/1000);
   
   json.setString("fileName", fileName);
   json.setString("lastModification", printTime());
