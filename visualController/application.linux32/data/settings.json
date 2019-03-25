@@ -1,0 +1,17 @@
+{
+  "play": true,
+  "rotate": false,
+  "fileName": "test19_bl.mp4",
+  "debug": false,
+  "invert": false,
+  "originX": 360,
+  "sliderBrightness": 255,
+  "offline": false,
+  "redraw": true,
+  "MANIFEST_HEIGHT": 261,
+  "introDuration": 7,
+  "MANIFEST_WIDTH": 720,
+  "lastModification": "21.3.2019, 15:20:15",
+  "state": 0,
+  "flip": true
+}
