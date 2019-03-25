@@ -217,7 +217,7 @@ boolean isSame(color c1, color c2) {
   float b1 = c1 & 0xFF;
   float g1 = c1 >> 8 & 0xFF;
   
- 
+
   float r2 = c2 >> 16 & 0xFF;
   float b2 = c1 & 0xFF;
   float g2 = c2 >> 8 & 0xFF;
@@ -225,12 +225,11 @@ boolean isSame(color c1, color c2) {
   return r1 == r2 && b1 ==b2 && g1 == g2;
 }
 
-
 void movieEvent(Movie m) {
   m.read();
   if(play && (state == NONE || state == INTRO)) {    
-    if(introFinished) nextFrame = movie; // setCurrentFrame(m);
-    else nextFrame = introMov; //setCurrentFrame(m);
+    if(introFinished) nextFrame = movie;
+    else nextFrame = introMov;
   }
 }
 
