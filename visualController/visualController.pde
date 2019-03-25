@@ -193,5 +193,6 @@ void draw() {
   
   updateGUI();
   drawGUI();
+  updateUDP();
   
 }

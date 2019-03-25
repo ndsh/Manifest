@@ -2,7 +2,11 @@
 import hypermedia.net.*;
 
 UDP udp;  // define the UDP object
-
+long pingTimestamp;
+int pingInterval = 3000;
+int pingPort = 4000;
+String pingIP = "localhost";
+String pingMessage = "ping";
 /**
  * init
  */
@@ -13,6 +17,7 @@ void initUDP() {
   udp = new UDP( this, 6100 );
   //udp.log( true );     // <-- printout the connection activity
   udp.listen( true );
+  pingTimestamp = millis();
 }
 
 
@@ -55,4 +60,11 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
   
   // print the result
   println( "receive: \""+message+"\" from "+ip+" on port "+port );
+}
+
+void updateUDP() {
+  if (pingTimestamp - millis() > pingInterval) {
+    udp.send( pingMessage, pingIP, pingPort );
+    pingTimestamp = millis();
+  }
 }
