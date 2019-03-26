@@ -126,7 +126,7 @@ void constructGUI() {
     
   imageList = cp5.addScrollableList("imageList")
      .setPosition(14, 190)
-     .setSize(160, 100)
+     .setSize(160, 400)
      .setBarHeight(20)
      .setItemHeight(20)
      .setType(ControlP5.LIST)

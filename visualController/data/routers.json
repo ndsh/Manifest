@@ -1,0 +1,64 @@
+[
+	{
+	  "info": "prototyping+leihrouter",
+	  "active": false,
+	  "router0": "2.12.4.124",
+	  "router1": "2.161.30.223",
+	},
+	{
+	  "info": "prototyping+leihrouter",
+	  "active": false,
+	  "router0": "2.12.4.155",
+	  "router1": "2.12.4.156",
+	},
+	{
+	  "info": "zeilen 0 - 3",
+	  "active": true,
+	  "router0": "2.12.4.114",
+	  "router1": "2.12.4.111",
+	},
+	{
+	  "info": "zeilen 4 - 7",
+	  "active": true,
+	  "router0": "2.12.4.112",
+	  "router1": "2.12.4.118",
+	},
+	{
+	  "info": "zeilen 8 - 11",
+	  "active": true,
+	  "router0": "2.12.4.121",
+	  "router1": "2.12.4.122",
+	},
+	{
+	  "info": "zeilen 12 - 15",
+	  "active": true,
+	  "router0": "2.12.4.110",
+	  "router1": "2.12.4.116",
+	},
+	{
+	  "info": "zeilen 16 - 19",
+	  "active": true,
+	  "router0": "2.12.4.83",
+	  "router1": "2.12.4.117",
+	},
+	{
+	  "info": "zeilen 20 - 23",
+	  "active": true,
+	  "router0": "2.12.4.123",
+	  "router1": "2.12.4.119",
+	},
+	{
+	  "info": "zeilen 24 - 27",
+	  "active": true,
+	  "router0": "2.12.4.115",
+	  "router1": "2.12.4.120",
+	},
+	{
+	  "info": "zeilen 28 + 29",
+	  "active": true,
+	  "router0": "2.12.4.113",
+	  "router1": "0.0.0.0",
+	},
+
+
+]

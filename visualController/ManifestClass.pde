@@ -28,7 +28,7 @@ class Manifest {
       }
     }
   
-    println("Anzahl LED Streifen: "+ stripes.size());
+    println("\tAnzahl LED Streifen: "+ stripes.size());
   }
   
   void setFrame(PImage _p) {
@@ -45,18 +45,6 @@ class Manifest {
     //println("setFrame for PGraphics");
   }
   
-  /*
-  void feedFrame(PImage p) {
-  p.loadPixels();
-  for (int y = 0; y<4; y++) {
-    for(int x = 0; x<720; x++) {
-      color c = p.pixels[x+y*p.height]; //.get(x,y);
-      mapPixels(x,y, lightGain((int)c));
-    }
-  }
-}
-  */
-  
   void update() {
     if(redraw) {
       if(isUpdatable && frameType > 0) {
@@ -65,8 +53,9 @@ class Manifest {
            p.loadPixels();
            for(int x = 0; x<720; x++) {
              for(int y = 0; y<30; y++) {
-               color c = p.pixels[y*p.width+x];//color c = p.get(x,y);
-               setPixel(x,y, lightGain((int)brightness(c)));
+               color c = p.pixels[y*p.width+x]; //color c = p.get(x,y);
+               if(debug && random(0, 100) > 80) setPixel(x,y, lightGain((int)brightness(c)));
+               else setPixel(x,y, lightGain((int)brightness(c)));
              }
            }
         } else if(frameType == 2) {
@@ -81,7 +70,6 @@ class Manifest {
     if(redraw) {
       fill(object);
       stroke(0,0,0);
-      //box(390.5, 290, 40.5); // original inner cube
       pushMatrix();
         translate(0,0,20);
         box(5, 290, 5);

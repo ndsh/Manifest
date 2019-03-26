@@ -6,12 +6,14 @@
   "invert": false,
   "originX": 360,
   "sliderBrightness": 255,
-  "offline": false,
+  "offline": true,
   "redraw": true,
   "MANIFEST_HEIGHT": 261,
   "introDuration": 7,
+  "introAmount": 6,
   "MANIFEST_WIDTH": 720,
   "lastModification": "21.3.2019, 15:20:15",
   "state": 0,
-  "flip": true
+  "flip": true,
+  "deployed": false
 }

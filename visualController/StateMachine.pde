@@ -43,6 +43,7 @@ void createDemos() {
   demo9 = new Demo9();
   demo10 = new Demo10();
   demo11 = new Demo11();
+  init_d();
 }
 
 
@@ -904,7 +905,7 @@ class Demo10 {
 }
 
 
-// Bild
+// statische Bilder
 class Demo11 {
   PGraphics pg;
   PImage p;
@@ -928,12 +929,10 @@ class Demo11 {
     if (tempFile.exists()) {
       folder = dataFile(externalPath+"img");
       external = true;
-     //filePath = externalPath+"content/"+fileName;
-     println("[success] found image folder on external");
+     println("\timage folder: external");
     } else{
       folder = dataFile(path);
-//     filePath = "demos/"+fileName;
-     println("[fail] couldn't find image folder on external");
+     println("\timage folder: internal");
     }
 
     initList();
@@ -941,6 +940,7 @@ class Demo11 {
   
   void initList() {
     File[] pics = folder.listFiles();
+    Arrays.sort(pics);
     filenames = new String[pics.length];
     for (int i = 0; i < pics.length; filenames[i] = pics[i++].getPath());
     if(filenames.length > 0) {
@@ -948,7 +948,8 @@ class Demo11 {
       
       for(int i = 0; i< filenames.length; i++) {
         String[] splitter = split(filenames[i], '.');
-        if(splitter[1].equals("jpg") || splitter[1].equals("JPG") || splitter[1].equals("png") || splitter[1].equals("PNG")) { 
+        
+        if(splitter.length > 1 && (splitter[1].equals("jpg") || splitter[1].equals("JPG") || splitter[1].equals("png") || splitter[1].equals("PNG"))) { 
           String[] absolutePath = split(filenames[i], '/');
           files.append(absolutePath[absolutePath.length-1]);
         }
@@ -1000,6 +1001,10 @@ class Demo11 {
     if (i < 0) i += files.size();
     pointer = i;
     getImage();
+  }
+  
+  void prevImage() {
+    setImage(pointer-1);
   }
   
   void nextImage() {

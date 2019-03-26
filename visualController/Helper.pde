@@ -6,6 +6,10 @@ void keyPressed() {
       prevDemo(1);
     } else if (keyCode == RIGHT) {
       nextDemo(1);
+    } else if (keyCode == UP && state == 11) {
+      demo11.prevImage();
+    } else if (keyCode == DOWN && state == 11) {
+      demo11.nextImage();
     }
   } else {
     if (key == 'r' || key == 'R' ) {
@@ -103,7 +107,14 @@ void dragging() {
   }
 }
 
+void init_d() {
+  if(fileExists("manifest.ini", externalPath, false)) debug = false;
+  else if(fileExists("manifest.ini", "", true) && !deployed) debug = false;
+  else debug = true;
+}
+
 int lightGain(int val) {
+  if(debug && random(0, 100) > 80) val = (int)random(0, 255);
   if(invert) val = (int)map(val, 0, 255, 255, 0);
   int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
@@ -111,6 +122,7 @@ int lightGain(int val) {
 }
 
 int lightGain(float val) {
+  if(debug && random(0, 100) > 80) val = (int)random(0, 255);
   if(invert) val = (int)map(val, 0, 255, 255, 0);
   int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
@@ -118,6 +130,7 @@ int lightGain(float val) {
 }
 
 int lightGain(int h, int s, int b) {
+  if(debug && random(0, 100) > 80) b = (int)random(0, 255);
   if(invert) b = (int)map(b, 0, 255, 255, 0);
   int calc = round(map(color(h,s,b), 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
@@ -135,7 +148,20 @@ void setupCamera() {
   camera.setCenterDragHandler(null);  
   camera.setRightDragHandler(null); 
 }
-
+void loadRouters(String s) {
+  int c = 0;
+  JSONArray arr = loadJSONArray(s);
+  for(int i = 0; i<arr.size(); i++) {
+    JSONObject set = arr.getJSONObject(i);
+    boolean active = set.getBoolean("active");
+    if(active) {
+      routerIPs[c] = set.getString("router0");
+      c++;
+      routerIPs[c] = set.getString("router1");
+      c++;
+    }
+  }
+}
 void loadSettings(String s) {
   JSONObject settings = loadJSONObject(s);
   play = settings.getBoolean("play");
@@ -145,11 +171,13 @@ void loadSettings(String s) {
   rotate = settings.getBoolean("rotate");
   redraw = settings.getBoolean("redraw"); 
   invert = settings.getBoolean("invert");
+  deployed = settings.getBoolean("deployed");
  
   sliderBrightness = settings.getFloat("sliderBrightness");
   tempBrightness = sliderBrightness;
   
   introDuration = settings.getInt("introDuration")*1000;
+  introAmount = settings.getInt("introAmount");
   
   originX = settings.getInt("originX");
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
@@ -171,6 +199,7 @@ void saveSettings() {
   json.setBoolean("rotate", rotate);
   json.setBoolean("redraw", redraw);
   json.setBoolean("invert", invert);
+  json.setBoolean("deployed", deployed);
   
   json.setFloat("sliderBrightness", sliderBrightness);
   
@@ -178,6 +207,7 @@ void saveSettings() {
   json.setInt("MANIFEST_HEIGHT", MANIFEST_HEIGHT);
   json.setInt("state", state);
   json.setInt("originX", originX);
+  json.setInt("introAmount", introAmount);
   
   json.setInt("introDuration", (int)introDuration/1000);
   
@@ -185,44 +215,8 @@ void saveSettings() {
   json.setString("lastModification", printTime());
   
   if(fileExists("settings.json", externalPath, false)) saveJSONObject(json, externalPath+"settings.json" );
-  // folgende zeile später auskommentieren weil system dann nur noch read-only ist. eventuell wirft das fehler
-  saveJSONObject(json, "data/settings.json");
+  if(deployed) saveJSONObject(json, "data/settings.json");
   println("saved current settings to file");
-}
-
-int getLogGamma(int in) {
-  return gamma8[in]; 
-}
-int gamma8[] = {
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,
-    1,  1,  1,  1,  1,  1,  1,  1,  1,  2,  2,  2,  2,  2,  2,  2,
-    2,  3,  3,  3,  3,  3,  3,  3,  4,  4,  4,  4,  4,  5,  5,  5,
-    5,  6,  6,  6,  6,  7,  7,  7,  7,  8,  8,  8,  9,  9,  9, 10,
-   10, 10, 11, 11, 11, 12, 12, 13, 13, 13, 14, 14, 15, 15, 16, 16,
-   17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22, 23, 24, 24, 25,
-   25, 26, 27, 27, 28, 29, 29, 30, 31, 32, 32, 33, 34, 35, 35, 36,
-   37, 38, 39, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 50,
-   51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68,
-   69, 70, 72, 73, 74, 75, 77, 78, 79, 81, 82, 83, 85, 86, 87, 89,
-   90, 92, 93, 95, 96, 98, 99,101,102,104,105,107,109,110,112,114,
-  115,117,119,120,122,124,126,127,129,131,133,135,137,138,140,142,
-  144,146,148,150,152,154,156,158,160,162,164,167,169,171,173,175,
-  177,180,182,184,186,189,191,193,196,198,200,203,205,208,210,213,
-  215,218,220,223,225,228,231,233,236,239,241,244,247,249,252,255
-};
-
-boolean isSame(color c1, color c2) {
-  float r1 = c1 >> 16 & 0xFF;
-  float b1 = c1 & 0xFF;
-  float g1 = c1 >> 8 & 0xFF;
-  
-
-  float r2 = c2 >> 16 & 0xFF;
-  float b2 = c1 & 0xFF;
-  float g2 = c2 >> 8 & 0xFF;
- 
-  return r1 == r2 && b1 ==b2 && g1 == g2;
 }
 
 void movieEvent(Movie m) {
@@ -243,4 +237,22 @@ boolean fileExists(String filename, String externalPath, boolean internal) {
   else tempFile = new File(dataPath(externalPath+filename));
   if (tempFile.exists()) return true;
   else return false;
+}
+
+void loadIntro() {
+  String path = "intros";
+  File tempFile = new File(dataPath(externalPath+path));
+  File folder;
+
+  if (tempFile.exists()) {
+    folder = dataFile(externalPath+path);
+   println("\tintros folder: external");
+  } else{
+    folder = dataFile(path);
+   println("\tintros folder: internal");
+  }
+  println(folder);
+  int rIntro = (int)random(0, introAmount-1);
+  introMov = new Movie(this, folder+"/"+ rIntro +".mp4");
+  introMov.loop();
 }
