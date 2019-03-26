@@ -63,7 +63,13 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
     }
   } else if (message.contains("Manifest,Menu")) {
     saveSettings();
+  }  else if (message.contains("Manifest,Mute")) {
+    sliderBrightness = 0;
+    cp5.getController("sliderBrightness").setValue(sliderBrightness);
+    delay(100);
+    exit();
   } 
+    
     
   
   // print the result
