@@ -2110,6 +2110,17 @@ class Demo11 {
     }
   }
   
+  public void setImage(int i) {
+    i = i % files.size();
+    if (i < 0) i += files.size();
+    pointer = i;
+    getImage();
+  }
+  
+  public void nextImage() {
+    setImage(pointer+1);
+  }
+  
   public void getImage() {
     println("loading file: "+ files.get(pointer));
     if(!external) p = loadImage(sketchPath("") +"data/"+path+"/"+files.get(pointer));
@@ -2268,6 +2279,14 @@ public void receive( byte[] data, String ip, int port ) {  // <-- extended handl
     prevDemo(1);
   } else if (message.contains("Manifest,Av2")) {
     nextDemo(1);
+  } else if (message.contains("Manifest,VGA")) {
+    switch(state) {
+      case DEMO11:
+        demo11.nextImage();
+      break;
+      case DEMO1:
+      break;
+    }
   } else if (message.contains("Manifest,Menu")) {
     saveSettings();
   } 

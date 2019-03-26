@@ -995,6 +995,17 @@ class Demo11 {
     }
   }
   
+  void setImage(int i) {
+    i = i % files.size();
+    if (i < 0) i += files.size();
+    pointer = i;
+    getImage();
+  }
+  
+  void nextImage() {
+    setImage(pointer+1);
+  }
+  
   void getImage() {
     println("loading file: "+ files.get(pointer));
     if(!external) p = loadImage(sketchPath("") +"data/"+path+"/"+files.get(pointer));

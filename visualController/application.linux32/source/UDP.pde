@@ -53,6 +53,14 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
     prevDemo(1);
   } else if (message.contains("Manifest,Av2")) {
     nextDemo(1);
+  } else if (message.contains("Manifest,VGA")) {
+    switch(state) {
+      case DEMO11:
+        demo11.nextImage();
+      break;
+      case DEMO1:
+      break;
+    }
   } else if (message.contains("Manifest,Menu")) {
     saveSettings();
   } 
