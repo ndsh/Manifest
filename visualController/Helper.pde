@@ -37,51 +37,57 @@ void keyPressed() {
 }
 
 PImage transformFrame(PImage s) {
-  PGraphics destination;
+  PImage destination = createImage(720, 30, ALPHA);
+  /*
   destination = createGraphics(720,30);
+  
   destination.beginDraw();
   destination.colorMode(HSB, 360, 100, 255);
   destination.background(0);
   destination.endDraw();
+  destination.loadPixels();
   s.loadPixels();
-  float factor = float((s.height-1) / destination.height);
+  */
+  //float factor = float((s.height-1) / destination.height);
   
-  factor = 9;
+  int factor = 9;
   //factor = 8.6666666666666666666666666667;
   //factor = 9;
   // von zeile 0 zu zeile 1 = 9 pixel
   // 9 * 29 (für zwischenräume) = 261
   
   //int c = 0;
-  destination.beginDraw();
+  //destination.beginDraw();
   //for(float y = 0; y<s.height; y+=factor) {
-  for(float y = 0; y<30; y++) {
-      int f = ceil(y*factor);
-      PImage p = s.get(0, f, 720, 1);
+  for(int y = 0; y<destination.height; y++) {
+      int f = y*factor;
+      arrayCopy(s.pixels, f*s.width, destination.pixels, y*destination.width, s.width);
+      
+      //PImage p = s.get(0, f, 720, 1);
       //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
-      destination.image(p, 0, y, 720, 1);
+      //destination.image(p, 0, y, 720, 1);
       //println("row" + y + " = " + round(y));
       //c++;
   }
+  
   //println("--");
   //noLoop();
-  destination.endDraw();
-  
+  //destination.endDraw();
+  destination.updatePixels();
   return destination;
 }
 
 void setCurrentFrame(PImage p) {
-  if(originX > 0) {
-    PGraphics pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
-    pg.beginDraw();
-    pg.colorMode(HSB, 360, 100, 255);
-    //pg.image(p, originX, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
-    PImage p1 = p.get(originX, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
-    PImage p2 = p.get(0, 0, originX-1, MANIFEST_HEIGHT);
-    //pg.image(p1, MANIFEST_WIDTH-originX, 0, MANIFEST_WIDTH, MANIFEST_HEIGHT);
-    pg.image(p1, 0, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
-    pg.image(p2, originX-1, 0, originX, MANIFEST_HEIGHT);
-    pg.endDraw();
+  
+  if(originX > 0 && originX < MANIFEST_WIDTH) {
+    PImage pg = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, ALPHA);
+    p.loadPixels();
+    int cut = MANIFEST_WIDTH-originX < p.width ? MANIFEST_WIDTH-originX : p.width;
+    for (int i=0; i<p.height; i++) {
+      arrayCopy(p.pixels, i*p.width, pg.pixels, originX+i*pg.width, cut);
+      if (cut < p.width) arrayCopy(p.pixels, i*p.width+cut, pg.pixels, i*pg.width, p.width-cut);
+    }
+    pg.updatePixels();
     currentFrame = pg;
   } else currentFrame = p;
 }

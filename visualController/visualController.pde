@@ -192,7 +192,9 @@ void initSequence() {
     color(255);
     text((loadIndex+" of "+sequencePaths.size()), 100, 100);
     println((loadIndex+" of "+sequencePaths.size()));
-    sequence.add(loadImage(sequencePaths.get(loadIndex)));
+    PImage s = loadImage(sequencePaths.get(loadIndex));
+    s.filter(GRAY);
+    sequence.add(s);
     loadIndex++;
   } else {
     isSequenceLoaded = true;

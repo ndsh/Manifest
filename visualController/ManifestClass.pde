@@ -12,7 +12,7 @@ class Manifest {
    
   public Manifest(color o) {
     object = o;
-    p = createImage(720, 30, RGB);
+    p = createImage(720, 30, ALPHA);
     pg = createGraphics(720, 30);
     pg.beginDraw();
     pg.background(0);
@@ -54,8 +54,9 @@ class Manifest {
            for(int x = 0; x<720; x++) {
              for(int y = 0; y<30; y++) {
                color c = p.pixels[y*p.width+x]; //color c = p.get(x,y);
-               if(debug && random(0, 100) > 80) setPixel(x,y, lightGain((int)brightness(c)));
-               else setPixel(x,y, lightGain((int)brightness(c)));
+               //if(debug && random(0, 100) > 80) setPixel(x,y, lightGain((int)brightness(c)));
+               //else 
+               setPixel(x,y, lightGain((int)brightness(c)));
              }
            }
         } else if(frameType == 2) {
