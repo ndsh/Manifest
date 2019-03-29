@@ -192,7 +192,7 @@ void initSequence() {
   if (loadIndex < sequencePaths.size()) {
     color(255);
     text((loadIndex+" of "+sequencePaths.size()), 100, 100);
-    println((loadIndex+" of "+sequencePaths.size()));
+    //println((loadIndex+" of "+sequencePaths.size()));
     PImage s = loadImage(sequencePaths.get(loadIndex));
     s.filter(GRAY);
     sequence.add(s);
@@ -208,7 +208,8 @@ void draw() {
   
   dragging();
   if (!isSequenceLoaded) initSequence();
-  thread("doUpdate");
+  //thread("doUpdate");
+  doUpdate();
   
   if(rotate) camera.rotateY(rotationSpeed);
   
