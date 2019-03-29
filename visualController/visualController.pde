@@ -87,6 +87,7 @@ void setup() {
   size(1080,600,P3D);
   colorMode(HSB, 360, 100, 255);
   smooth();
+  frameRate(1000);
   
   println("* * * * * * * * * * * * * * * * * * * * * * * * * * * * ");
   println("Manifest setup() information");
@@ -204,8 +205,24 @@ void initSequence() {
 
 void draw() {
   background(bg);
+  
   dragging();
   if (!isSequenceLoaded) initSequence();
+  thread("doUpdate");
+  
+  if(rotate) camera.rotateY(rotationSpeed);
+  
+  manifest.update();
+  manifest.display();
+ 
+  
+  updateGUI();
+  drawGUI();
+  updateUDP();
+  
+}
+
+void doUpdate() {
   if(!introFinished) {
     state = 0;
     if(millis() - introPrevMillis < introDuration) {
@@ -224,15 +241,6 @@ void draw() {
   } else {
     stateMachine(state);
   }
+  
   send();
-  if(rotate) camera.rotateY(rotationSpeed);
-  
-  manifest.update();
-  manifest.display();
- 
-  
-  updateGUI();
-  drawGUI();
-  updateUDP();
-  
 }

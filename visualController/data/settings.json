@@ -5,7 +5,7 @@
   "frameRate": 0,
   "debug": false,
   "invert": false,
-  "originX": 360,
+  "originX": 0,
   "sliderBrightness": 255,
   "offline": true,
   "redraw": true,
