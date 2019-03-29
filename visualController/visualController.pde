@@ -59,6 +59,7 @@ int sliderOptions4 = 0;
 
 int originX = 0;
 
+boolean frameUpdated = true;
 boolean introFinished = false;
 long introDuration = 0;
 long introPrevMillis = 0;
@@ -224,12 +225,15 @@ void draw() {
 }
 
 void doUpdate() {
+  frameUpdated = false;
+  
   if(!introFinished) {
     state = 0;
     if(millis() - introPrevMillis < introDuration) {
       if(play && nextFrame != null) {
         setCurrentFrame(nextFrame);
         transformWrapper();
+        frameUpdated = true;
       }
     } else {
       introMov.noLoop();
@@ -243,5 +247,5 @@ void doUpdate() {
     stateMachine(state);
   }
   
-  send();
+  if (frameUpdated) send();
 }

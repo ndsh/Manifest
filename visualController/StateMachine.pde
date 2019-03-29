@@ -67,6 +67,7 @@ void stateMachine(int state) {
         prevFrameTimestamp = millis();
         frameIndex = theFrameRate == 0 ? (frameIndex + 1) % sequence.size() : floor((millis() - sequenceStartTimestamp) / frameDelta) % sequence.size();
         nextFrame = sequence.get(frameIndex);
+        frameUpdated = true;
         //println("Frame "+theIndex);
       }
       if(play && nextFrame != null) {
@@ -83,6 +84,7 @@ void stateMachine(int state) {
       demo1.display();
       setCurrentFrame(demo1.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
       //send();
     break;
     
@@ -91,6 +93,7 @@ void stateMachine(int state) {
       demo2.display();
       setCurrentFrame(demo2.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
       //send();
     break;
     
@@ -99,6 +102,7 @@ void stateMachine(int state) {
       demo3.display();
       setCurrentFrame(demo3.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     case DEMO4:
@@ -106,6 +110,7 @@ void stateMachine(int state) {
       demo4.display();
       setCurrentFrame(demo4.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
    
     case DEMO5:
@@ -113,6 +118,7 @@ void stateMachine(int state) {
       //demo5.display();
       setCurrentFrame(demo5.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     case DEMO6:
@@ -120,6 +126,7 @@ void stateMachine(int state) {
       //demo5.display();
       setCurrentFrame(demo6.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     case DEMO7:
@@ -127,6 +134,7 @@ void stateMachine(int state) {
       demo7.display();
       setCurrentFrame(demo7.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     case DEMO8:
@@ -134,6 +142,7 @@ void stateMachine(int state) {
       demo8.display();
       setCurrentFrame(demo8.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     case DEMO9:
@@ -141,6 +150,7 @@ void stateMachine(int state) {
       demo9.display();
       setCurrentFrame(demo9.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     case DEMO10:
@@ -148,6 +158,7 @@ void stateMachine(int state) {
       demo10.display();
       setCurrentFrame(demo10.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     
@@ -157,6 +168,7 @@ void stateMachine(int state) {
       demo11.display();
       setCurrentFrame(demo11.getDisplay()); 
       transformWrapper();
+      frameUpdated = true;
     break;
     
     }
