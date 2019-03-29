@@ -32,10 +32,10 @@ void constructGUI() {
     .setSize(100, 8)
     .setColorValue(black)
     ;
-  cp5.addSlider("sliderOptions")
+  cp5.addSlider("isTheFrameRate")
     .setRange(0, 100)
     .setPosition(15, 130)
-    .setValue(255)
+    .setValue(theFrameRate)
     .setSize(100, 8)
     .setColorValue(black)
     ;
@@ -184,6 +184,11 @@ void sliderBrightness(int in) {
   float br = map(in, 0, 255, 0, 100);
   sliderBrightness = in;
   if(brightnessInPercLabel != null) brightnessInPercLabel.setText("BRIGHTNESS: "+ round(br) +"%");
+}
+
+void isTheFrameRate(int in) {
+  theFrameRate = in;
+  //if(brightnessInPercLabel != null) brightnessInPercLabel.setText("BRIGHTNESS: "+ round(br) +"%");
 }
 
 void playCheckbox(float[] a) {

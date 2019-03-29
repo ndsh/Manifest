@@ -13,6 +13,11 @@ import java.util.*;
 import processing.video.*;
 Movie movie;
 Movie introMov;
+ArrayList<String> sequencePaths = new ArrayList<String>();
+ArrayList<PImage> sequence = new ArrayList<PImage>();
+boolean isImageSequence = false;
+boolean isSequenceLoaded = false;
+int loadIndex = 0;
 
 PeasyCam camera;
 ControlP5 cp5; 
@@ -61,10 +66,16 @@ int introAmount = 0;
 
 float rotationSpeed = 0.001;
 String externalPath = "/media/thegreeneyl/INHALTE/";
+String imgfiletypes = "jpeg, jpg, png, gif";
+long sequenceStartTimestamp;
+long prevFrameTimestamp;
+int theFrameRate = 50;
+float frameDelta = 1000.0 / theFrameRate;
+int frameIndex = 0;
 
 // DEFINE SOURCE DIMENSIONS
 int MANIFEST_WIDTH = 720;
-int MANIFEST_HEIGHT = 261;
+int MANIFEST_HEIGHT = 262;
 
 AudioIn input;
 Amplitude loudness;
@@ -94,7 +105,7 @@ void setup() {
    println("\tsettings.json: external");
   } else{
    loadSettings("data/settings.json");
-   mainMovieFilePath = "content/"+fileName;
+   mainMovieFilePath = dataPath("content/"+fileName);
    println("\tsettings.json: internal");
   }
   
@@ -107,6 +118,8 @@ void setup() {
    println("\trouters.json: internal");
   }
   
+  //frameRate(theFrameRate);
+  frameDelta = theFrameRate == 0 ? 0 : 1000.0 / theFrameRate;
   manifest = new Manifest(object);
 
   camera = new PeasyCam(this, 100);
@@ -127,9 +140,7 @@ void setup() {
   }
   
   loadIntro();
-  
-  movie = new Movie(this, mainMovieFilePath);
-  
+  loadMovie();
   
   createDemos();
   nextFrame = createImage(MANIFEST_WIDTH, MANIFEST_HEIGHT, RGB);
@@ -150,9 +161,49 @@ void setup() {
   introPrevMillis = millis();
 }
 
+void loadMovie() {
+  String[] f = split(mainMovieFilePath, '.');
+  if (imgfiletypes.indexOf(f[f.length-1].toLowerCase()) != -1) {
+    isImageSequence = true;
+    // we'll have a look in the data folder
+    java.io.File file = new java.io.File(mainMovieFilePath);
+    String dirPath = file.getAbsoluteFile().getParentFile().getAbsolutePath()+"/";
+    println("load image sequence from \""+dirPath+"\"");    
+    java.io.File folder = new java.io.File(dirPath);
+    // list the files in the data folder, passing the filter as parameter
+    String[] files = folder.list();
+    if (files != null && files.length > 0) {
+      Arrays.sort(files);
+      for (int i=0; i < files.length; i++) {
+        f = split(files[i], '.');
+        if (f.length > 1 && imgfiletypes.indexOf(f[f.length-1].toLowerCase()) != -1) sequencePaths.add(dirPath+files[i]);
+      }
+      println(sequencePaths.size() +" images loaded in sequencePaths");  
+      loadIndex = 0;
+    } else {
+      isImageSequence = false;
+      movie = new Movie(this, mainMovieFilePath);
+    }
+  }
+}
+
+void initSequence() {
+  if (loadIndex < sequencePaths.size()) {
+    color(255);
+    text((loadIndex+" of "+sequencePaths.size()), 100, 100);
+    println((loadIndex+" of "+sequencePaths.size()));
+    sequence.add(loadImage(sequencePaths.get(loadIndex)));
+    loadIndex++;
+  } else {
+    isSequenceLoaded = true;
+      println(sequence.size() +" images loaded in sequence");  
+  }
+}
+
 void draw() {
   background(bg);
   dragging();
+  if (!isSequenceLoaded) initSequence();
   if(!introFinished) {
     state = 0;
     if(millis() - introPrevMillis < introDuration) {
@@ -163,7 +214,10 @@ void draw() {
     } else {
       introMov.noLoop();
       introFinished = true;
-      movie.loop();
+      if (isImageSequence) {
+        frameIndex = 0;
+        sequenceStartTimestamp = prevFrameTimestamp = millis();
+      } else movie.loop();
     }
   } else {
     stateMachine(state);

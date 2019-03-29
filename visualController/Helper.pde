@@ -46,7 +46,7 @@ PImage transformFrame(PImage s) {
   s.loadPixels();
   float factor = float((s.height-1) / destination.height);
   
-  factor = 8.7;
+  factor = 9;
   //factor = 8.6666666666666666666666666667;
   //factor = 9;
   // von zeile 0 zu zeile 1 = 9 pixel
@@ -56,7 +56,7 @@ PImage transformFrame(PImage s) {
   destination.beginDraw();
   //for(float y = 0; y<s.height; y+=factor) {
   for(float y = 0; y<30; y++) {
-      int f = round(y*factor);
+      int f = ceil(y*factor);
       PImage p = s.get(0, f, 720, 1);
       //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
       destination.image(p, 0, y, 720, 1);
@@ -71,8 +71,8 @@ PImage transformFrame(PImage s) {
 }
 
 void setCurrentFrame(PImage p) {
-  PGraphics pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
   if(originX > 0) {
+    PGraphics pg = createGraphics(MANIFEST_WIDTH, MANIFEST_HEIGHT);
     pg.beginDraw();
     pg.colorMode(HSB, 360, 100, 255);
     //pg.image(p, originX, 0, MANIFEST_WIDTH-originX, MANIFEST_HEIGHT);
@@ -178,6 +178,7 @@ void loadSettings(String s) {
   
   introDuration = settings.getInt("introDuration")*1000;
   introAmount = settings.getInt("introAmount");
+  theFrameRate = settings.getInt("frameRate");
   
   originX = settings.getInt("originX");
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
@@ -208,6 +209,7 @@ void saveSettings() {
   json.setInt("state", state);
   json.setInt("originX", originX);
   json.setInt("introAmount", introAmount);
+  json.setInt("frameRate", theFrameRate);
   
   json.setInt("introDuration", (int)introDuration/1000);
   
