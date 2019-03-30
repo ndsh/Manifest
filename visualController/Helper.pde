@@ -109,7 +109,7 @@ void init_d() {
 }
 
 int lightGain(int val) {
-  if(debug && random(0, 100) > 80) val = (int)random(0, 255);
+  //if(debug && random(0, 100) > 80) val = (int)random(0, 255);
   //print("invert "+invert+": "+val);
   if(invert) val = (int)map(val, 0, 255, 255, 0);
   //print(", "+val);
@@ -120,7 +120,7 @@ int lightGain(int val) {
 }
 
 int lightGain(float val) {
-  if(debug && random(0, 100) > 80) val = (int)random(0, 255);
+  //if(debug && random(0, 100) > 80) val = (int)random(0, 255);
   if(invert) val = (int)map(val, 0, 255, 255, 0);
   int calc = round(map(val, 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
@@ -128,7 +128,7 @@ int lightGain(float val) {
 }
 
 int lightGain(int h, int s, int b) {
-  if(debug && random(0, 100) > 80) b = (int)random(0, 255);
+  //if(debug && random(0, 100) > 80) b = (int)random(0, 255);
   if(invert) b = (int)map(b, 0, 255, 255, 0);
   int calc = round(map(color(h,s,b), 0, 255, 0, (int)sliderBrightness));
   //calc = getLogGamma(calc);
