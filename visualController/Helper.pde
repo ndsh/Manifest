@@ -16,7 +16,9 @@ void keyPressed() {
       rotate = !rotate;
       float r[] = {rotate?1f:0f};
       rotateCheckbox.setArrayValue(r);
-    } else if (key == 'd' || key == 'D' ) {
+    } else if (key == 'd') {
+      draw = !draw;
+    } else if (key == 'D' ) {
       redraw = !redraw;
       float r[] = {redraw?1f:0f};
       redrawCheckbox.setArrayValue(r);
@@ -48,30 +50,15 @@ PImage transformFrame(PImage s) {
   destination.loadPixels();
   s.loadPixels();
   */
-  //float factor = float((s.height-1) / destination.height);
-  
-  int factor = 9;
-  //factor = 8.6666666666666666666666666667;
-  //factor = 9;
-  // von zeile 0 zu zeile 1 = 9 pixel
-  // 9 * 29 (für zwischenräume) = 261
   
   //int c = 0;
   //destination.beginDraw();
   //for(float y = 0; y<s.height; y+=factor) {
   for(int y = 0; y<destination.height; y++) {
-      int f = y*factor;
+      int f = y*linePixelPitch;
       arrayCopy(s.pixels, f*s.width, destination.pixels, y*destination.width, s.width);
-      
-      //PImage p = s.get(0, f, 720, 1);
-      //destination.image(s, 0, c, 720, 1, 0, y, 720, 1);
-      //destination.image(p, 0, y, 720, 1);
-      //println("row" + y + " = " + round(y));
-      //c++;
   }
   
-  //println("--");
-  //noLoop();
   //destination.endDraw();
   destination.updatePixels();
   return destination;
@@ -175,6 +162,7 @@ void loadSettings(String s) {
   offline = settings.getBoolean("offline");
   debug = settings.getBoolean("debug");
   rotate = settings.getBoolean("rotate");
+  draw = settings.getBoolean("draw"); 
   redraw = settings.getBoolean("redraw"); 
   invert = settings.getBoolean("invert");
   deployed = settings.getBoolean("deployed");
@@ -189,6 +177,7 @@ void loadSettings(String s) {
   originX = settings.getInt("originX");
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");
   MANIFEST_HEIGHT = settings.getInt("MANIFEST_HEIGHT");
+  linePixelPitch = settings.getInt("linePixelPitch");
   state = settings.getInt("state");
   tempState = state;
   
@@ -204,6 +193,7 @@ void saveSettings() {
   json.setBoolean("offline", offline);
   json.setBoolean("debug", debug);
   json.setBoolean("rotate", rotate);
+  json.setBoolean("draw", draw);
   json.setBoolean("redraw", redraw);
   json.setBoolean("invert", invert);
   json.setBoolean("deployed", deployed);
@@ -212,6 +202,7 @@ void saveSettings() {
   
   json.setInt("MANIFEST_WIDTH", MANIFEST_WIDTH);
   json.setInt("MANIFEST_HEIGHT", MANIFEST_HEIGHT);
+  json.setInt("linePixelPitch", linePixelPitch);
   json.setInt("state", state);
   json.setInt("originX", originX);
   json.setInt("introAmount", introAmount);

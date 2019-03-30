@@ -43,12 +43,14 @@ boolean flip = true;
 boolean offline = true;
 boolean debug = false;
 boolean rotate = false;
+boolean draw = true;
 boolean redraw = true;
 boolean invert = true;
 boolean externalSettings = false;
 boolean deployed = false;
 float sliderBrightness = 255;
 float tempBrightness = 0;
+int linePixelPitch = 9;
 int state = 11;
 int tempState = 0;
 String fileName = "";
@@ -205,23 +207,22 @@ void initSequence() {
 }
 
 void draw() {
-  background(bg);
   
-  dragging();
   if (!isSequenceLoaded) initSequence();
   //thread("doUpdate");
   doUpdate();
-  
-  if(rotate) camera.rotateY(rotationSpeed);
-  
-  manifest.update();
-  manifest.display();
- 
-  
-  updateGUI();
-  drawGUI();
-  updateUDP();
-  
+  if (draw) {
+    background(bg);
+    dragging();
+    if(rotate) camera.rotateY(rotationSpeed);
+    
+    manifest.update();
+    manifest.display();
+   
+    updateGUI();
+    drawGUI();
+    updateUDP();
+  }
 }
 
 void doUpdate() {
