@@ -212,6 +212,11 @@ void redrawCheckbox(float[] a) {
   else redraw = false;
 }
 
+void invertCheckbox(float[] a) {
+  if (a[0] == 1f) invert = true;
+  else invert = false;
+}
+
 void nextDemo(int theValue) {
   state++;
   if (state > MAX_STATES-1) state = 0;

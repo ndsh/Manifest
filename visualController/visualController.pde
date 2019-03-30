@@ -192,8 +192,6 @@ void loadMovie() {
 
 void initSequence() {
   if (loadIndex < sequencePaths.size()) {
-    color(255);
-    text((loadIndex+" of "+sequencePaths.size()), 100, 100);
     //println((loadIndex+" of "+sequencePaths.size()));
     PImage s = loadImage(sequencePaths.get(loadIndex));
     s.filter(GRAY);
