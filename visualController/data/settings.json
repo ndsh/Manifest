@@ -6,7 +6,7 @@
   "debug": false,
   "invert": false,
   "originX": 0,
-  "sliderBrightness": 100,
+  "sliderBrightness": 255,
   "offline": true,
   "redraw": true,
   "draw": true,
