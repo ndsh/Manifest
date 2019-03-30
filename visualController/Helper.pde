@@ -30,8 +30,6 @@ void keyPressed() {
       invert = !invert;
       float r[] = {invert?1f:0f};
       invertCheckbox.setArrayValue(r);
-    } else if (key == 'f' || key == 'F' ) {
-      println("frameRate: "+frameRate);
     } else if (key == 's' || key == 'S' ) {
       saveSettings();
     }
@@ -82,8 +80,8 @@ void setCurrentFrame(PImage p) {
 }
 
 void transformWrapper() {
-  PImage transformed = linePixelPitch > 0 ? transformFrame(currentFrame) : currentFrame;
-  if (draw && redraw) manifest.setFrame(transformed);
+  PImage transformed = transformFrame(currentFrame);
+  manifest.setFrame(transformed);
   feedFrame(transformed);
 }
 
@@ -175,9 +173,6 @@ void loadSettings(String s) {
   introDuration = settings.getInt("introDuration")*1000;
   introAmount = settings.getInt("introAmount");
   theFrameRate = settings.getInt("frameRate");
-  //frameRate(theFrameRate);
-  tempFrameRate = theFrameRate;
-  frameDelta = theFrameRate == 0 ? 0 : 1000.0 / theFrameRate;
   
   originX = settings.getInt("originX");
   MANIFEST_WIDTH = settings.getInt("MANIFEST_WIDTH");

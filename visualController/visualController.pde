@@ -50,7 +50,6 @@ boolean externalSettings = false;
 boolean deployed = false;
 float sliderBrightness = 255;
 float tempBrightness = 0;
-int tempFrameRate = 0;
 int linePixelPitch = 9;
 int state = 11;
 int tempState = 0;
@@ -123,6 +122,8 @@ void setup() {
    println("\trouters.json: internal");
   }
   
+  //frameRate(theFrameRate);
+  frameDelta = theFrameRate == 0 ? 0 : 1000.0 / theFrameRate;
   manifest = new Manifest(object);
 
   camera = new PeasyCam(this, 100);

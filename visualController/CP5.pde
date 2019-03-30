@@ -148,7 +148,7 @@ void constructGUI() {
   redrawCheckbox.setArrayValue((redraw?y:n));
   
   cp5.getController("sliderBrightness").setValue(tempBrightness);
-  cp5.getController("theFrameRate").setValue(tempFrameRate);
+  cp5.getController("theFrameRate").setValue(theFrameRate);
   cp5.getController("linePixelPitch").setValue(linePixelPitch);
 }
 
@@ -187,9 +187,8 @@ void sliderBrightness(int in) {
 }
 
 void theFrameRate(int in) {
-  theFrameRate = in;
   frameDelta = theFrameRate == 0 ? 0 : 1000.0 / theFrameRate;
-  println("set theFrameRate: "+theFrameRate);
+  theFrameRate = in;
 }
 
 void playCheckbox(float[] a) {
