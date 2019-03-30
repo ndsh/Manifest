@@ -54,7 +54,7 @@ PImage transformFrame(PImage s) {
   //int c = 0;
   //destination.beginDraw();
   //for(float y = 0; y<s.height; y+=factor) {
-  for(int y = 0; y<destination.height; y++) {
+  for(int y = 0; y<destination.height && y*linePixelPitch < s.height; y++) {
       int f = y*linePixelPitch;
       arrayCopy(s.pixels, f*s.width, destination.pixels, y*destination.width, s.width);
   }

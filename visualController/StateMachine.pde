@@ -65,7 +65,8 @@ void stateMachine(int state) {
       // feed the manifest with data
       if (isImageSequence && sequence.size() > 0 && millis() - prevFrameTimestamp > frameDelta) {
         prevFrameTimestamp = millis();
-        frameIndex = theFrameRate == 0 ? (frameIndex + 1) % sequence.size() : floor((millis() - sequenceStartTimestamp) / frameDelta) % sequence.size();
+        //frameIndex = theFrameRate == 0 ? (frameIndex + 1) % sequence.size() : floor((millis() - sequenceStartTimestamp) / frameDelta) % sequence.size();
+        frameIndex = (frameIndex + 1) % sequence.size();
         nextFrame = sequence.get(frameIndex);
         frameUpdated = true;
         //println("Frame "+theIndex);

@@ -35,14 +35,14 @@ void constructGUI() {
   cp5.addSlider("theFrameRate")
     .setRange(0, 100)
     .setPosition(15, 130)
-    .setValue(0)
+    .setValue(theFrameRate)
     .setSize(100, 8)
     .setColorValue(black)
     ;
-  cp5.addSlider("sliderOptions2")
-    .setRange(0, 100)
+  cp5.addSlider("linePixelPitch")
+    .setRange(0, 10)
     .setPosition(15, 140)
-    .setValue(255)
+    .setValue(linePixelPitch)
     .setSize(100, 8)
     .setColorValue(black)
     ;
@@ -148,8 +148,8 @@ void constructGUI() {
   redrawCheckbox.setArrayValue((redraw?y:n));
   
   cp5.getController("sliderBrightness").setValue(tempBrightness);
-  
-
+  cp5.getController("theFrameRate").setValue(theFrameRate);
+  cp5.getController("linePixelPitch").setValue(linePixelPitch);
 }
 
 void updateGUI() {
@@ -187,6 +187,7 @@ void sliderBrightness(int in) {
 }
 
 void theFrameRate(int in) {
+  frameDelta = theFrameRate == 0 ? 0 : 1000.0 / theFrameRate;
   theFrameRate = in;
 }
 
