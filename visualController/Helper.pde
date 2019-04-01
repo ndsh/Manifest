@@ -35,8 +35,9 @@ void keyPressed() {
     } else if (key == 's' || key == 'S' ) {
       saveSettings();
     }
-    
-    
+  }
+  if (keyCode == ENTER) {
+    frameIndex = 0;
   }
 }
 

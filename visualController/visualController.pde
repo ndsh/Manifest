@@ -196,6 +196,8 @@ void initSequence() {
     PImage s = loadImage(sequencePaths.get(loadIndex));
     s.filter(GRAY);
     sequence.add(s);
+    frameIndex = frameIndex > loadIndex ? loadIndex : frameIndex;
+    if (loadIndex < theFrameRate && loadIndex < 30) frameIndex = 0;
     loadIndex++;
   } else {
     isSequenceLoaded = true;
@@ -205,7 +207,8 @@ void initSequence() {
 
 void draw() {
   
-  if (!isSequenceLoaded) initSequence();
+  //if (!isSequenceLoaded) initSequence();
+  if (!isSequenceLoaded) thread("initSequence");
   //thread("doUpdate");
   doUpdate();
   if (draw) {
